@@ -41,43 +41,43 @@ storage related calls into native daos storage operations
 
 %if %{with_mpich}
 %package mpich
-Summary: HDF5 Vol Daos for MPICH
+Summary: HDF5 VOL DAOS with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa}
 BuildRequires: mpich-devel%{?_isa}
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description mpich
-HDF5 Vol Daos for MPICH
+HDF5 VOL DAOS with MPICH
 
 %package mpich-tests
-Summary: HDF5 Vol Daos mpich tests
+Summary: HDF5 VOL DAOS with mpich tests
 BuildRequires: hdf5-mpich-devel%{?_isa}
 BuildRequires: mpich-devel%{?_isa}
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description mpich-tests
-HDF5 Vol Daos mpich tests
+HDF5 VOL DAOS with mpich tests
 
 %endif
 
 %if %{with_openmpi3}
 %package openmpi3
-Summary: HDF5 Vol Daos  OpenMPI 3
+Summary: HDF5 VOL DAOS with OpenMPI 3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
 BuildRequires: openmpi3-devel%{?_isa}
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description openmpi3
-HDF5 Vol Daos  OpenMPI 3
+HDF5 VOL DAOS with OpenMPI 3
 
 %package openmpi3-tests
-Summary: HDF5 Vol Daos openmpi3 tests
+Summary: HDF5 VOL DAOS with openmpi3 tests
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
 BuildRequires: openmpi3-devel%{?_isa}
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description openmpi3-tests
-HDF5 Vol Daos openmpi3 tests
+HDF5 VOL DAOS with openmpi3 tests
 %endif
 
 %prep
@@ -124,11 +124,6 @@ do
   %module_load $mpi
   %{make_install} -C $mpi
   module purge
-done
-
-# install tests
-for mpi in %{?mpi_list}
-do
   mkdir -p ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
   for x in h5_test_testhdf5 h5vl_test h5_partest_t_bigio h5_partest_testphdf5 \
            h5vl_test_parallel h5_partest_t_shapesame
@@ -143,7 +138,7 @@ done
 %{_libdir}/pkgconfig
 %{_includedir}/daos_vol_config.h
 %{_includedir}/daos_vol_public.h
-%{_datadir}/cmake
+%exclude %{_datadir}/cmake
 
 %if %{with_mpich}
 %files mpich
