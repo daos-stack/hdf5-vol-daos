@@ -20,7 +20,7 @@ Release: 1.gb324b90d455%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
-URL:     https://bitbucket.hdfgroup.org/projects/HDF5VOL/repos/daos-vol
+URL:     https://github.com/daos-stack/hdf5-vol-daos
 Source0: daos-vol-master@b324b90d455.zip
 Source1: vol-tests-master@31660ab1935.zip
 
