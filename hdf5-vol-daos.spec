@@ -15,25 +15,23 @@
 %endif
 
 Name:    hdf5-vol-daos
-Version: 1.0
-Release: 1.gb324b90d455%{?dist}
+Version: 0.1
+Release: b324b90d4554e211976174b9a3acdba61c184248
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
 URL: https://portal.hdfgroup.org/display/HDF5/HDF5
-Source0: https://bitbucket.hdfgroup.org/rest/archive/latest/projects/HDF5VOL/repos/daos-vol/archive?format=tgz
+Source0: https://github.com/HDFGroup/vol-daos/archive/%{release}.tar.gz
 Source1: https://bitbucket.hdfgroup.org/rest/archive/latest/projects/HDF5VOL/repos/vol-tests/archive?format=tgz
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: cmake
 BuildRequires: hdf5-devel%{?_isa}
 %if (0%{?suse_version} >= 1500)
-BuildRequires: ed
-BuildRequires: Modules
+BuildRequires: lua-lmod
 %else
 BuildRequires: environment-modules
 %endif
-Provides:       %{name}-daos-%{daos_major} = %{version}-%{release}
 
 %description
 HDF5 VOL DAOS connector is used to leverage the
@@ -46,8 +44,6 @@ storage related calls into native daos storage operations
 %package mpich
 Summary: HDF5 VOL DAOS with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa}
-BuildRequires: mpich-devel%{?_isa}
-Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description mpich
 HDF5 VOL DAOS with MPICH
@@ -55,8 +51,6 @@ HDF5 VOL DAOS with MPICH
 %package mpich-devel
 Summary: HDF5 VOL DAOS devel with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa}
-BuildRequires: mpich-devel%{?_isa}
-Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description mpich-devel
 HDF5 VOL DAOS devel with MPICH
@@ -64,8 +58,6 @@ HDF5 VOL DAOS devel with MPICH
 %package mpich-tests
 Summary: HDF5 VOL DAOS tests with mpich
 BuildRequires: hdf5-mpich-devel%{?_isa}
-BuildRequires: mpich-devel%{?_isa}
-Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description mpich-tests
 HDF5 VOL DAOS tests with mpich
@@ -76,8 +68,6 @@ HDF5 VOL DAOS tests with mpich
 %package openmpi3
 Summary: HDF5 VOL DAOS with OpenMPI 3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
-BuildRequires: openmpi3-devel%{?_isa}
-Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description openmpi3
 HDF5 VOL DAOS with OpenMPI 3
@@ -85,8 +75,6 @@ HDF5 VOL DAOS with OpenMPI 3
 %package openmpi3-devel
 Summary: HDF5 VOL DAOS devel with OpenMPI 3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
-BuildRequires: openmpi3-devel%{?_isa}
-Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description openmpi3-devel
 HDF5 VOL DAOS devel with OpenMPI 3
@@ -94,17 +82,15 @@ HDF5 VOL DAOS devel with OpenMPI 3
 %package openmpi3-tests
 Summary: HDF5 VOL DAOS tests with openmpi3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
-BuildRequires: openmpi3-devel%{?_isa}
-Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description openmpi3-tests
 HDF5 VOL DAOS tests with openmpi3
 %endif
 
 %prep
-%setup -c
+%setup -n vol-daos-%{release}
 cd test/vol
-/usr/bin/unzip %SOURCE1
+/usr/bin/tar -xzf %SOURCE1
 
 %build
 for mpi in %{?mpi_list}
@@ -177,5 +163,5 @@ done
 %endif
 
 %changelog
-* Mon Aug 3 2020 Maureen Jean <maureen.jean@intel.com> - 1.0-1.gb324b90d455
+* Mon Aug 3 2020 Maureen Jean <maureen.jean@intel.com> - 0.1-b324b90d455
 - Initial version - vol tests g31660ab1935
