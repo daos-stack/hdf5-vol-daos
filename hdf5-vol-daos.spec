@@ -20,17 +20,20 @@ Release: 1.gb324b90d455%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
-URL:     https://github.com/daos-stack/hdf5-vol-daos
-Source0: daos-vol-master@b324b90d455.zip
-Source1: vol-tests-master@31660ab1935.zip
+URL: https://portal.hdfgroup.org/display/HDF5/HDF5
+Source0: https://bitbucket.hdfgroup.org/rest/archive/latest/projects/HDF5VOL/repos/daos-vol/archive?format=tgz
+Source1: https://bitbucket.hdfgroup.org/rest/archive/latest/projects/HDF5VOL/repos/vol-tests/archive?format=tgz
 
-%if 0%{?suse_version}
-BuildRequires: gcc-fortran
-BuildRequires: lua-lmod
 BuildRequires: gcc, gcc-c++
-%endif
 BuildRequires: cmake
 BuildRequires: hdf5-devel%{?_isa}
+%if (0%{?suse_version} >= 1500)
+BuildRequires: ed
+BuildRequires: Modules
+%else
+BuildRequires: environment-modules
+%endif
+Provides:       %{name}-daos-%{daos_major} = %{version}-%{release}
 
 %description
 HDF5 VOL DAOS connector is used to leverage the
@@ -49,14 +52,23 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 %description mpich
 HDF5 VOL DAOS with MPICH
 
+%package mpich-devel
+Summary: HDF5 VOL DAOS devel with MPICH
+BuildRequires: hdf5-mpich-devel%{?_isa}
+BuildRequires: mpich-devel%{?_isa}
+Requires: %{name}%{?_isa} = %{version}-%{release}
+
+%description mpich-devel
+HDF5 VOL DAOS devel with MPICH
+
 %package mpich-tests
-Summary: HDF5 VOL DAOS with mpich tests
+Summary: HDF5 VOL DAOS tests with mpich
 BuildRequires: hdf5-mpich-devel%{?_isa}
 BuildRequires: mpich-devel%{?_isa}
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description mpich-tests
-HDF5 VOL DAOS with mpich tests
+HDF5 VOL DAOS tests with mpich
 
 %endif
 
@@ -70,14 +82,23 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 %description openmpi3
 HDF5 VOL DAOS with OpenMPI 3
 
+%package openmpi3-devel
+Summary: HDF5 VOL DAOS devel with OpenMPI 3
+BuildRequires: hdf5-openmpi3-devel%{?_isa}
+BuildRequires: openmpi3-devel%{?_isa}
+Requires: %{name}%{?_isa} = %{version}-%{release}
+
+%description openmpi3-devel
+HDF5 VOL DAOS devel with OpenMPI 3
+
 %package openmpi3-tests
-Summary: HDF5 VOL DAOS with openmpi3 tests
+Summary: HDF5 VOL DAOS tests with openmpi3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
 BuildRequires: openmpi3-devel%{?_isa}
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description openmpi3-tests
-HDF5 VOL DAOS with openmpi3 tests
+HDF5 VOL DAOS tests with openmpi3
 %endif
 
 %prep
@@ -86,18 +107,6 @@ cd test/vol
 /usr/bin/unzip %SOURCE1
 
 %build
-mkdir build
-pushd build
-cmake -DCMAKE_INSTALL_PREFIX=%{_prefix} \
-      -DBUILD_TESTING=ON \
-      -DHDF5_VOL_DAOS_INSTALL_LIB_DIR=%{_libdir} \
-      -DHDF5_VOL_TEST_ENABLE_PART=ON \
-      -DHDF5_VOL_TEST_ENABLE_PARALLEL=ON \
-      -DHDF5_VOL_DAOS_USE_SYSTEM_HDF5=OFF \
-      -DDAOS_UNIFIED_NAMESPACE_LIBRARY=%{_libdir}/libduns.so \
-      ..
-%{make_build}
-popd
 for mpi in %{?mpi_list}
 do
   mkdir $mpi
@@ -117,8 +126,6 @@ do
 done
 
 %install
-%{make_install} -C build
-
 for mpi in %{?mpi_list}
 do
   %module_load $mpi
@@ -134,18 +141,18 @@ done
 
 %files
 %license COPYING
-%{_libdir}/libhdf5_vol_daos.so*
-%{_libdir}/pkgconfig
-%{_includedir}/daos_vol_config.h
-%{_includedir}/daos_vol_public.h
-%exclude %{_datadir}/cmake
 
 %if %{with_mpich}
 %files mpich
 %license COPYING
-%{_libdir}/mpich/lib/
-%{_libdir}/mpich/include
+%{_libdir}/mpich/lib/libhdf5_vol_daos.so.*
 %{_libdir}/mpich/share
+
+%files mpich-devel
+%license COPYING
+%{_libdir}/mpich/lib/libhdf5_vol_daos.so
+%{_libdir}/mpich/lib/pkgconfig/
+%{_libdir}/mpich/include/*.h
 
 %files mpich-tests
 %license COPYING
@@ -155,9 +162,14 @@ done
 %if %{with_openmpi3}
 %files openmpi3
 %license COPYING
-%{_libdir}/openmpi3/lib/
-%{_libdir}/openmpi3/include
+%{_libdir}/openmpi3/lib/libhdf5_vol_daos.so.*
 %{_libdir}/openmpi3/share
+
+%files openmpi3-devel
+%license COPYING
+%{_libdir}/openmpi3/lib/libhdf5_vol_daos.so
+%{_libdir}/openmpi3/lib/pkgconfig/
+%{_libdir}/openmpi3/include/*.h
 
 %files openmpi3-tests
 %license COPYING
