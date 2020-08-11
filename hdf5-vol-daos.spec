@@ -8,6 +8,8 @@
 %global mpi_list %{?mpi_list} openmpi3
 %endif
 
+%global test_commit 31660ab19352049cf59f98b1fba498b3e93dade5
+
 %if (0%{?suse_version} >= 1500)
 %global module_load() if [ "%{1}" == "openmpi3" ]; then module load gnu-openmpi; else module load gnu-%{1}; fi
 %else
@@ -22,7 +24,8 @@ Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 License: GPL
 URL: https://portal.hdfgroup.org/display/HDF5/HDF5
 Source0: https://github.com/HDFGroup/vol-daos/archive/%{release}.tar.gz
-Source1: https://bitbucket.hdfgroup.org/rest/archive/latest/projects/HDF5VOL/repos/vol-tests/archive?format=tgz
+Source1: https://github.com/HDFGroup/vol-tests/archive/%{test_commit}.tar.gz
+
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: cmake
@@ -89,8 +92,8 @@ HDF5 VOL DAOS tests with openmpi3
 
 %prep
 %setup -n vol-daos-%{release}
-cd test/vol
-/usr/bin/tar -xzf %SOURCE1
+%setup -T -D -b 1 -n vol-daos-%{release}
+/usr/bin/cp -r ../vol-tests-%{test_commit}/* test/vol/
 
 %build
 for mpi in %{?mpi_list}
