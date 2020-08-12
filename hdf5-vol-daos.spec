@@ -21,8 +21,8 @@ Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
 URL: https://portal.hdfgroup.org/display/HDF5/HDF5
-Source0: https://github.com/HDFGroup/vol-daos/archive/%{?source_commit}.tar.gz
-Source1: https://github.com/HDFGroup/vol-tests/archive/%{?test_commit}.tar.gz
+Source0: %{?source_commit}.tar.gz
+Source1: %{?test_commit}.tar.gz
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: cmake
