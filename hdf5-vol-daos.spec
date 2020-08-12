@@ -8,9 +8,6 @@
 %global mpi_list %{?mpi_list} openmpi3
 %endif
 
-%global source_commit b324b90d4554e211976174b9a3acdba61c184248
-%global test_commit 31660ab19352049cf59f98b1fba498b3e93dade5
-
 %if (0%{?suse_version} >= 1500)
 %global module_load() if [ "%{1}" == "openmpi3" ]; then module load gnu-openmpi; else module load gnu-%{1}; fi
 %else
@@ -19,13 +16,13 @@
 
 Name:    hdf5-vol-daos
 Version: 0.1
-Release: b324b90d455
+Release: 1%{?relval}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
 URL: https://portal.hdfgroup.org/display/HDF5/HDF5
-Source0: https://github.com/HDFGroup/vol-daos/archive/%{source_commit}.tar.gz
-Source1: https://github.com/HDFGroup/vol-tests/archive/%{test_commit}.tar.gz
+Source0: https://github.com/HDFGroup/vol-daos/archive/%{?source_commit}.tar.gz
+Source1: https://github.com/HDFGroup/vol-tests/archive/%{?test_commit}.tar.gz
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: cmake
@@ -165,5 +162,5 @@ done
 %endif
 
 %changelog
-* Mon Aug 3 2020 Maureen Jean <maureen.jean@intel.com> - 0.1-b324b90d455
+* Mon Aug 3 2020 Maureen Jean <maureen.jean@intel.com> - 0.1-1.gb324b90d4
 - Initial version - vol tests g31660ab1935
