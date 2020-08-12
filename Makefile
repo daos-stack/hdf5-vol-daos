@@ -1,5 +1,5 @@
 NAME          := hdf5-vol-daos
-SRC_EXT       := zip
-TEST_PACKAGES := $(NAME) $(NAME)-mpich-tests $(NAME)-openmpi3-tests
+SRC_EXT       := tgz
+TEST_PACKAGES := $(NAME) $(NAME)-mpich $(NAME)-openmpi3 $(NAME)-mpich-devel $(NAME)-openmpi3-devel $(NAME)-mpich-tests $(NAME)-openmpi3-tests
 
 include packaging/Makefile_packaging.mk
