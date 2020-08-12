@@ -26,7 +26,11 @@ Source1: %{test_commit}.tar.gz
 
 BuildRequires: daos-devel
 BuildRequires: gcc, gcc-c++
+%if (0%{?suse_version} >= 1500)
 BuildRequires: cmake >= 3.1
+%else
+BuildRequires: cmake3 >= 3.1
+%endif
 BuildRequires: hdf5-devel%{?_isa}
 %if (0%{?suse_version} >= 1500)
 BuildRequires: lua-lmod
