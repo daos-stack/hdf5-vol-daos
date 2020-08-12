@@ -14,6 +14,12 @@
 %global module_load() module load mpi/%{1}-%{_arch}
 %endif
 
+%if (0%{?suse_version} >= 1500)
+%global cmake cmake
+%else
+%global cmake cmake3
+%endif
+
 Name:    hdf5-vol-daos
 Version: 0.1
 Release: 1%{?relval}%{?dist}
@@ -103,7 +109,7 @@ do
   mkdir $mpi
   pushd $mpi
   %module_load $mpi
-  cmake -DCMAKE_INSTALL_PREFIX=%{_libdir}/$mpi \
+  %{cmake} -DCMAKE_INSTALL_PREFIX=%{_libdir}/$mpi \
         -DBUILD_TESTING=ON \
         -DHDF5_VOL_TEST_ENABLE_PART=ON \
         -DHDF5_VOL_TEST_ENABLE_PARALLEL=ON \
