@@ -25,7 +25,7 @@ Source0: %{source_commit}.tar.gz
 Source1: %{test_commit}.tar.gz
 
 BuildRequires: gcc, gcc-c++
-BuildRequires: cmake
+BuildRequires: cmake >= 3.1
 BuildRequires: hdf5-devel%{?_isa}
 %if (0%{?suse_version} >= 1500)
 BuildRequires: lua-lmod
