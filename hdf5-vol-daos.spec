@@ -34,15 +34,14 @@ BuildRequires: daos-devel%{?_isa}
 BuildRequires: gcc, gcc-c++
 %if (0%{?suse_version} >= 1500)
 BuildRequires: cmake >= 3.1
+BuildRequires: lua-lmod
+BuildRequires: gcc7, gcc7-c++, gcc7-fortran
 %else
 BuildRequires: cmake3 >= 3.1
+BuildRequires: environment-modules
+BuildRequires: gcc, gcc-c++
 %endif
 BuildRequires: hdf5-devel%{?_isa}
-%if (0%{?suse_version} >= 1500)
-BuildRequires: lua-lmod
-%else
-BuildRequires: environment-modules
-%endif
 
 %description
 HDF5 VOL DAOS connector is used to leverage the
