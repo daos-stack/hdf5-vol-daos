@@ -9,9 +9,9 @@
 %endif
 
 %if (0%{?suse_version} >= 1500)
-%global module_load() if [ "%{1}" == "openmpi3" ]; then module load gnu-openmpi; else module load gnu-%{1}; fi
+%global module_load() if [ "%{1}" == "openmpi3" ]; then MODULEPATH=/usr/share/modules module load gnu-openmpi; else MODULEPATH=/usr/share/modules module load gnu-%{1}; fi
 %else
-%global module_load() module load mpi/%{1}-%{_arch}
+%global module_load() MODULEPATH=/usr/share/modules module load mpi/%{1}-%{_arch}
 %endif
 
 %if (0%{?suse_version} >= 1500)
@@ -108,9 +108,9 @@ for mpi in %{?mpi_list}
 do
   mkdir $mpi
   pushd $mpi
-  module avail
+  MODULEPATH=/usr/share/modules module avail
   %module_load $mpi
-  module list
+  MODULEPATH=/usr/share/modules module list
   %{cmake} -DCMAKE_INSTALL_PREFIX=%{_libdir}/$mpi \
         -DBUILD_TESTING=ON \
         -DHDF5_VOL_TEST_ENABLE_PART=ON \
