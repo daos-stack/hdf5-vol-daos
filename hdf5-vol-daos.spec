@@ -30,7 +30,7 @@ URL: https://portal.hdfgroup.org/display/HDF5/HDF5
 Source0: %{source_commit}.tar.gz
 Source1: %{test_commit}.tar.gz
 
-BuildRequires: daos-devel{?_isa}
+BuildRequires: daos-devel%{?_isa}
 BuildRequires: gcc, gcc-c++
 %if (0%{?suse_version} >= 1500)
 BuildRequires: cmake >= 3.1
