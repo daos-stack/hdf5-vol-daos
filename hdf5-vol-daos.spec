@@ -108,7 +108,9 @@ for mpi in %{?mpi_list}
 do
   mkdir $mpi
   pushd $mpi
+  module avail
   %module_load $mpi
+  module list
   %{cmake} -DCMAKE_INSTALL_PREFIX=%{_libdir}/$mpi \
         -DBUILD_TESTING=ON \
         -DHDF5_VOL_TEST_ENABLE_PART=ON \
