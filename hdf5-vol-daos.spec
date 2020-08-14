@@ -106,12 +106,20 @@ do
   mkdir $mpi
   pushd $mpi
   %module_load $mpi
+%if (0%{?suse_version} >= 1500)
+  %{cmake} -DCMAKE_INSTALL_PREFIX=%{_libdir}/mpi/gcc/$mpi \
+%else
   %{cmake} -DCMAKE_INSTALL_PREFIX=%{_libdir}/$mpi \
+%endif
         -DBUILD_TESTING=ON \
         -DHDF5_VOL_TEST_ENABLE_PART=ON \
         -DHDF5_VOL_TEST_ENABLE_PARALLEL=ON \
         -DHDF5_VOL_DAOS_USE_SYSTEM_HDF5=OFF \
+%if (0%{?suse_version} >= 1500)
+        -DMPI_C_COMPILER=%{_libdir}/mpi/gcc/$mpi/bin/mpicc \
+%else
         -DMPI_C_COMPILER=%{_libdir}/$mpi/bin/mpicc \
+%endif
         ..
   %{make_build}
   module purge
@@ -128,7 +136,11 @@ do
   for x in h5_test_testhdf5 h5vl_test h5_partest_t_bigio h5_partest_testphdf5 \
            h5vl_test_parallel h5_partest_t_shapesame
   do
+%if (0%{?suse_version} >= 1500)
+    install -m 0755 mpi/gcc/$mpi/bin/${x} ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
+%else
     install -m 0755 $mpi/bin/${x} ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
+%endif
   done
 done
 
