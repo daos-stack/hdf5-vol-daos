@@ -144,6 +144,11 @@ do
     install -m 0755 $mpi/bin/libhdf5_vol_daos.* ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
 %endif
   done
+%if (0%{?suse_version} >= 1500)
+  install -m 0755 mpi/gcc/$mpi/bin/libhdf5_vol_daos.* ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
+%else
+  install -m 0755 $mpi/bin/libhdf5_vol_daos.* ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
+%endif
 done
 
 %files
