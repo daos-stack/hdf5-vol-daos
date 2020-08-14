@@ -115,11 +115,6 @@ do
         -DHDF5_VOL_TEST_ENABLE_PART=ON \
         -DHDF5_VOL_TEST_ENABLE_PARALLEL=ON \
         -DHDF5_VOL_DAOS_USE_SYSTEM_HDF5=OFF \
-%if (0%{?suse_version} >= 1500)
-        -DMPI_C_COMPILER=%{_libdir}mpi/gcc/$mpi/bin/mpicc \
-%else
-        -DMPI_C_COMPILER=%{_libdir}/$mpi/bin/mpicc \
-%endif
         ..
   %{make_build}
   module purge
