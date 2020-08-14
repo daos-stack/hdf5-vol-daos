@@ -106,7 +106,6 @@ do
   mkdir $mpi
   pushd $mpi
   %module_load $mpi
-  which mpicc
 %if (0%{?suse_version} >= 1500)
   %{cmake} -DCMAKE_INSTALL_PREFIX=%{_libdir}/mpi/gcc/$mpi \
 %else
