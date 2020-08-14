@@ -106,7 +106,7 @@ do
   mkdir $mpi
   pushd $mpi
   %module_load $mpi
-%if (0%{?suse_version} >= 1520)
+%if (0%{?suse_version} >= 1500)
   %{cmake} -DCMAKE_INSTALL_PREFIX=%{_libdir}/mpi/gcc/$mpi \
 %else
   %{cmake} -DCMAKE_INSTALL_PREFIX=%{_libdir}/$mpi \
@@ -115,7 +115,7 @@ do
         -DHDF5_VOL_TEST_ENABLE_PART=ON \
         -DHDF5_VOL_TEST_ENABLE_PARALLEL=ON \
         -DHDF5_VOL_DAOS_USE_SYSTEM_HDF5=OFF \
-%if (0%{?suse_version} >= 1520)
+%if (0%{?suse_version} >= 1500)
         -DMPI_C_COMPILER=%{_libdir}/mpi/gcc/$mpi/bin/mpicc \
 %else
         -DMPI_C_COMPILER=%{_libdir}/$mpi/bin/mpicc \
@@ -146,7 +146,7 @@ done
 %if %{with_mpich}
 %files mpich
 %license COPYING
-%if (0%{?suse_version} >= 1520)
+%if (0%{?suse_version} >= 1500)
 %{_libdir}/mpi/gcc/mpich/lib/libhdf5_vol_daos.so.*
 %{_libdir}/mpi/gcc/mpich/share
 %else
@@ -156,7 +156,7 @@ done
 
 %files mpich-devel
 %license COPYING
-%if (0%{?suse_version} >= 1520)
+%if (0%{?suse_version} >= 1500)
 %{_libdir}/mpi/gcc/mpich/lib/libhdf5_vol_daos.so
 %{_libdir}/mpi/gcc/mpich/lib/pkgconfig/
 %{_libdir}/mpi/gcc/mpich/include/*.h
