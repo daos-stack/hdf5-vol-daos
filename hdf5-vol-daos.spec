@@ -48,6 +48,8 @@ BuildRequires: cmake3 >= 3.1
 BuildRequires: environment-modules
 %endif
 BuildRequires: hdf5-devel%{?_isa}
+Requires: daos-devel%{?_isa}
+Requires: hdf5-devel%{?_isa}
 
 %description
 HDF5 VOL DAOS connector is used to leverage the
