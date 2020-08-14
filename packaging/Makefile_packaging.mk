@@ -62,7 +62,7 @@ define distro_map
 	        ;;                         \
 	        sl42.3) distro="leap42.3"  \
 	        ;;                         \
-	        sl15.1) distro="leap15"    \
+	        sl15.*) distro="leap15"    \
 	        ;;                         \
 	    esac;
 endef
