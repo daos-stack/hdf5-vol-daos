@@ -20,6 +20,14 @@
 %global cmake cmake3
 %endif
 
+%if (0%{?suse_version} >= 1500)
+%global mpi_libdir %{_libdir}/mpi/gcc
+%global mpi_incldir  %{_includedir}/mpi/gcc
+%else
+%global mpi_libdir %{_libdir}
+%global mpi_incldir  %{_includedir}
+%endif
+
 Name:    hdf5-vol-daos
 Version: 0.1
 Release: 1%{?relval}%{?dist}
@@ -106,20 +114,12 @@ do
   mkdir $mpi
   pushd $mpi
   %module_load $mpi
-%if (0%{?suse_version} >= 1500)
-  %{cmake} -DCMAKE_INSTALL_PREFIX=%{_libdir}/mpi/gcc/$mpi \
-%else
-  %{cmake} -DCMAKE_INSTALL_PREFIX=%{_libdir}/$mpi \
-%endif
+  %{cmake} -DCMAKE_INSTALL_PREFIX=%{mpi_libdir}/$mpi \
         -DBUILD_TESTING=ON \
         -DHDF5_VOL_TEST_ENABLE_PART=ON \
         -DHDF5_VOL_TEST_ENABLE_PARALLEL=ON \
         -DHDF5_VOL_DAOS_USE_SYSTEM_HDF5=OFF \
-%if (0%{?suse_version} >= 1500)
-        -DMPI_C_COMPILER=%{_libdir}/mpi/gcc/$mpi/bin/mpicc \
-%else
-        -DMPI_C_COMPILER=%{_libdir}/$mpi/bin/mpicc \
-%endif
+        -DMPI_C_COMPILER=%{mpi_libdir}/$mpi/bin/mpicc \
         ..
   %{make_build}
   module purge
@@ -138,8 +138,10 @@ do
   do
 %if (0%{?suse_version} >= 1500)
     install -m 0755 mpi/gcc/$mpi/bin/${x} ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
+    install -m 0755 mpi/gcc/$mpi/bin/libhdf5_vol_daos.* ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
 %else
     install -m 0755 $mpi/bin/${x} ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
+    install -m 0755 $mpi/bin/libhdf5_vol_daos.* ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
 %endif
   done
 done
@@ -150,15 +152,15 @@ done
 %if %{with_mpich}
 %files mpich
 %license COPYING
-%{_libdir}/mpich/lib/libhdf5_vol_daos.so.*
-%{_libdir}/mpich/share
+%{mpi_libdir}/mpich/lib/libhdf5_vol_daos.so.*
+%{mpi_libdir}/mpich/share
 
 
 %files mpich-devel
 %license COPYING
-%{_libdir}/mpich/lib/libhdf5_vol_daos.so
-%{_libdir}/mpich/lib/pkgconfig/
-%{_libdir}/mpich/include/*.h
+%{mpi_libdir}/mpich/lib/libhdf5_vol_daos.so
+%{mpi_libdir}/mpich/lib/pkgconfig/
+%{mpi_libdir}/mpich/include/*.h
 
 %files mpich-tests
 %license COPYING
@@ -168,14 +170,14 @@ done
 %if %{with_openmpi3}
 %files openmpi3
 %license COPYING
-%{_libdir}/openmpi3/lib/libhdf5_vol_daos.so.*
-%{_libdir}/openmpi3/share
+%{mpi_libdir}/openmpi3/lib/libhdf5_vol_daos.so.*
+%{mpi_libdir}/openmpi3/share
 
 %files openmpi3-devel
 %license COPYING
-%{_libdir}/openmpi3/lib/libhdf5_vol_daos.so
-%{_libdir}/openmpi3/lib/pkgconfig/
-%{_libdir}/openmpi3/include/*.h
+%{mpi_libdir}/openmpi3/lib/libhdf5_vol_daos.so
+%{mpi_libdir}/openmpi3/lib/pkgconfig/
+%{mpi_libdir}/openmpi3/include/*.h
 
 %files openmpi3-tests
 %license COPYING
