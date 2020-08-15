@@ -120,6 +120,7 @@ do
         -DHDF5_VOL_TEST_ENABLE_PARALLEL=ON \
         -DHDF5_VOL_DAOS_USE_SYSTEM_HDF5=OFF \
         -DMPI_C_COMPILER=%{mpi_libdir}/$mpi/bin/mpicc \
+        -DCMAKE_SKIP_RPATH:BOOL=ON \
         ..
   %{make_build}
   module purge
@@ -134,7 +135,8 @@ do
   module purge
   mkdir -p ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
   for x in h5_test_testhdf5 h5vl_test h5_partest_t_bigio h5_partest_testphdf5 \
-           h5vl_test_parallel h5_partest_t_shapesame
+           h5vl_test_parallel h5_partest_t_shapesame h5daos_test_map \
+           h5daos_test_map_parallel h5daos_test_oclass
   do
     install -m 0755 $mpi/bin/${x} ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
   done
