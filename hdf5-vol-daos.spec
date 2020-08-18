@@ -63,6 +63,7 @@ storage related calls into native daos storage operations
 Summary: HDF5 VOL DAOS with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa}
 Requires: hdf5-mpich-devel%{?_isa}
+Provides: %{name}-mpich2 = %{version}-%{release}
 Provides: %{name}-mpich2-daos-%{daos_major} = %{version}-%{release}
 
 %description mpich
@@ -72,6 +73,8 @@ HDF5 VOL DAOS with MPICH
 Summary: HDF5 VOL DAOS devel with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa}
 Requires: hdf5-mpich-devel%{?_isa}
+Requires: %{name}-mpich2
+Provides: %{name}-mpich2-devel = %{version}-%{release}
 
 %description mpich-devel
 HDF5 VOL DAOS devel with MPICH
@@ -80,6 +83,7 @@ HDF5 VOL DAOS devel with MPICH
 Summary: HDF5 VOL DAOS tests with mpich
 BuildRequires: hdf5-mpich-devel%{?_isa}
 Requires: hdf5-mpich-devel%{?_isa}
+Requires: %{name}-mpich2
 Provides: %{name}-mpich2-tests-daos-%{daos_major} = %{version}-%{release}
 
 %description mpich-tests
@@ -92,6 +96,7 @@ HDF5 VOL DAOS tests with mpich
 Summary: HDF5 VOL DAOS with OpenMPI 3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
 Requires: hdf5-openmpi3-devel%{?_isa}
+Provides: %{name}-openmpi3 = %{version}-%{release}
 Provides: %{name}-openmpi3-daos-%{daos_major} = %{version}-%{release}
 
 %description openmpi3
@@ -101,6 +106,8 @@ HDF5 VOL DAOS with OpenMPI 3
 Summary: HDF5 VOL DAOS devel with OpenMPI 3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
 Requires: hdf5-openmpi3-devel%{?_isa}
+Requires: %{name}-openmpi3
+Provides: %{name}-openmpi3-devel = %{version}-%{release}
 
 %description openmpi3-devel
 HDF5 VOL DAOS devel with OpenMPI 3
@@ -109,6 +116,7 @@ HDF5 VOL DAOS devel with OpenMPI 3
 Summary: HDF5 VOL DAOS tests with openmpi3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
 Requires: hdf5-openmpi3-devel%{?_isa}
+Requires: %{name}-openmpi3
 Provides: %{name}-openmpi3-tests-daos-%{daos_major} = %{version}-%{release}
 
 %description openmpi3-tests
