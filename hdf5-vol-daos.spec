@@ -58,7 +58,6 @@ capabilities of the DAOS object storage system
 within an HDF5 application.  It translates HDF5 VOL 
 storage related calls into native daos storage operations
 
-
 %if %{with_mpich}
 %package mpich
 Summary: HDF5 VOL DAOS with MPICH
