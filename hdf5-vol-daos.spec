@@ -1,6 +1,8 @@
 %global with_mpich 1
 %global with_openmpi3 1
 
+%global daos_major 0
+
 %if %{with_mpich}
 %global mpi_list mpich
 %endif
@@ -48,6 +50,7 @@ BuildRequires: cmake3 >= 3.1
 BuildRequires: environment-modules
 %endif
 BuildRequires: hdf5-devel%{?_isa}
+Provides:       %{name}-daos-%{daos_major} = %{version}-%{release}
 
 %description
 HDF5 VOL DAOS connector is used to leverage the
@@ -60,6 +63,8 @@ storage related calls into native daos storage operations
 %package mpich
 Summary: HDF5 VOL DAOS with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa}
+Requires: hdf5-mpich-devel%{?_isa}
+Provides: %{name}-mpich2-daos-%{daos_major} = %{version}-%{release}
 
 %description mpich
 HDF5 VOL DAOS with MPICH
@@ -67,6 +72,7 @@ HDF5 VOL DAOS with MPICH
 %package mpich-devel
 Summary: HDF5 VOL DAOS devel with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa}
+Requires: hdf5-mpich-devel%{?_isa}
 
 %description mpich-devel
 HDF5 VOL DAOS devel with MPICH
@@ -74,6 +80,8 @@ HDF5 VOL DAOS devel with MPICH
 %package mpich-tests
 Summary: HDF5 VOL DAOS tests with mpich
 BuildRequires: hdf5-mpich-devel%{?_isa}
+Requires: hdf5-mpich-devel%{?_isa}
+Provides: %{name}-mpich2-tests-daos-%{daos_major} = %{version}-%{release}
 
 %description mpich-tests
 HDF5 VOL DAOS tests with mpich
@@ -84,6 +92,8 @@ HDF5 VOL DAOS tests with mpich
 %package openmpi3
 Summary: HDF5 VOL DAOS with OpenMPI 3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
+Requires: hdf5-openmpi3-devel%{?_isa}
+Provides: %{name}-openmpi3-daos-%{daos_major} = %{version}-%{release}
 
 %description openmpi3
 HDF5 VOL DAOS with OpenMPI 3
@@ -91,6 +101,7 @@ HDF5 VOL DAOS with OpenMPI 3
 %package openmpi3-devel
 Summary: HDF5 VOL DAOS devel with OpenMPI 3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
+Requires: hdf5-openmpi3-devel%{?_isa}
 
 %description openmpi3-devel
 HDF5 VOL DAOS devel with OpenMPI 3
@@ -98,6 +109,8 @@ HDF5 VOL DAOS devel with OpenMPI 3
 %package openmpi3-tests
 Summary: HDF5 VOL DAOS tests with openmpi3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
+Requires: hdf5-openmpi3-devel%{?_isa}
+Provides: %{name}-openmpi3-tests-daos-%{daos_major} = %{version}-%{release}
 
 %description openmpi3-tests
 HDF5 VOL DAOS tests with openmpi3
