@@ -26,10 +26,8 @@
 %global mpi_libdir %{_libdir}/mpi/gcc
 %global mpi_incldir  %{_includedir}/mpi/gcc
 %else
-%if (0%{?rhel} >= 7)
 %global mpi_libdir %{_libdir}
 %global mpi_incldir  %{_includedir}
-%endif
 %endif
 
 Name:    hdf5-vol-daos
@@ -49,7 +47,7 @@ BuildRequires: cmake >= 3.1
 BuildRequires: lua-lmod
 %else
 BuildRequires: cmake3 >= 3.1
-BuildRequires: environment-modules
+BuildRequires: Lmod
 %endif
 BuildRequires: hdf5-devel%{?_isa}
 Provides:       %{name}-daos-%{daos_major} = %{version}-%{release}
@@ -57,7 +55,7 @@ Provides:       %{name}-daos-%{daos_major} = %{version}-%{release}
 %description
 HDF5 VOL DAOS connector is used to leverage the
 capabilities of the DAOS object storage system
-within an HDF5 application.  It translates HDF5 VOL 
+within an HDF5 application.  It translates HDF5 VOL
 storage related calls into native daos storage operations
 
 %if %{with_mpich}
@@ -128,7 +126,7 @@ HDF5 VOL DAOS tests with openmpi3
 %prep
 %setup -n vol-daos-%{source_commit}
 %setup -T -D -b 1 -n vol-daos-%{source_commit}
-/usr/bin/cp -r ../vol-tests-%{test_commit}/* test/vol/
+mv ../vol-tests-%{test_commit}/* test/vol/
 
 %build
 for mpi in %{?mpi_list}
