@@ -6,7 +6,7 @@ TEST_COMMIT   := 31660ab19352049cf59f98b1fba498b3e93dade5
 SOURCE        = $(SOURCE_COMMIT).tar.$(SRC_EXT) 
 PATCHES       = $(TEST_COMMIT).tar.$(SRC_EXT)
 GIT_SHORT     := $(shell git rev-parse --short $(SOURCE_COMMIT))
-BUILD_DEFINES := --define "%relval .g$(GIT_SHORT)" --define "%source_commit $(SOURCE_COMMIT)" --define "%test_commit $(TEST_COMMIT)"
+BUILD_DEFINES := --define "relval .g$(GIT_SHORT)" --define "source_commit $(SOURCE_COMMIT)" --define "test_commit $(TEST_COMMIT)"
 RPM_BUILD_OPTIONS := $(BUILD_DEFINES)
 
 $(SOURCE_COMMIT).tar.$(SRC_EXT):
