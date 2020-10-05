@@ -32,7 +32,7 @@
 
 Name:    hdf5-vol-daos
 Version: 0.1
-Release: 1%{?relval}%{?dist}
+Release: 2%{?relval}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -62,7 +62,6 @@ storage related calls into native daos storage operations
 %package mpich
 Summary: HDF5 VOL DAOS with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa}
-Requires: hdf5-mpich-devel%{?_isa}
 Provides: %{name}-mpich2 = %{version}-%{release}
 Provides: %{name}-mpich2-daos-%{daos_major} = %{version}-%{release}
 
@@ -82,7 +81,6 @@ HDF5 VOL DAOS devel with MPICH
 %package mpich-tests
 Summary: HDF5 VOL DAOS tests with mpich
 BuildRequires: hdf5-mpich-devel%{?_isa}
-Requires: hdf5-mpich-devel%{?_isa}
 Requires: %{name}-mpich2
 Provides: %{name}-mpich2-tests-daos-%{daos_major} = %{version}-%{release}
 
@@ -201,5 +199,8 @@ done
 %endif
 
 %changelog
-* Mon Aug 3 2020 Maureen Jean <maureen.jean@intel.com> - 0.1-1.gb324b90d4
+* Mon Oct  5 2020 Brian J. Murrell <brian.murrell@intel.com> - 0.1-2.gb324b90d4
+- Tests packages should not require any -devel packages
+
+* Mon Aug  3 2020 Maureen Jean <maureen.jean@intel.com> - 0.1-1.gb324b90d4
 - Initial version - vol tests g31660ab1935
