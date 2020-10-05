@@ -93,7 +93,6 @@ HDF5 VOL DAOS tests with mpich
 %package openmpi3
 Summary: HDF5 VOL DAOS with OpenMPI 3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
-Requires: hdf5-openmpi3-devel%{?_isa}
 Provides: %{name}-openmpi3 = %{version}-%{release}
 Provides: %{name}-openmpi3-daos-%{daos_major} = %{version}-%{release}
 
@@ -113,7 +112,6 @@ HDF5 VOL DAOS devel with OpenMPI 3
 %package openmpi3-tests
 Summary: HDF5 VOL DAOS tests with openmpi3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
-Requires: hdf5-openmpi3-devel%{?_isa}
 Requires: %{name}-openmpi3
 Provides: %{name}-openmpi3-tests-daos-%{daos_major} = %{version}-%{release}
 
