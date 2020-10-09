@@ -1,7 +1,7 @@
 %global with_mpich 1
 %global with_openmpi3 1
 
-%global daos_major 0
+%global daos_major 1
 
 %if %{with_mpich}
 %global mpi_list mpich
@@ -40,7 +40,8 @@ URL: https://portal.hdfgroup.org/display/HDF5/HDF5
 Source0: %{source_commit}.tar.gz
 Source1: %{test_commit}.tar.gz
 
-BuildRequires: daos-devel%{?_isa}
+BuildRequires: daos-devel%{?_isa} = 1.1.0-33.5094.gf56b0d3a%{dist}
+
 BuildRequires: gcc, gcc-c++
 %if (0%{?suse_version} >= 1500)
 BuildRequires: cmake >= 3.1
@@ -197,6 +198,9 @@ done
 %endif
 
 %changelog
+* Fri Oct  9 2020 Brian J. Murrell <brian.murrell@intel.com> - 0.1-3.gb324b90d4
+- Rebuild for libdaos 1.2.0
+
 * Mon Oct  5 2020 Brian J. Murrell <brian.murrell@intel.com> - 0.1-2.gb324b90d4
 - Tests packages should not require any -devel packages
 
