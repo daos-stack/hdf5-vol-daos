@@ -197,7 +197,7 @@ done
 %endif
 
 %changelog
-* Wed Nov  4 2020 Maureen Jean <maureen.jean@intel.com> - 0.1-3.g9afaf5907
+* Wed Nov  5 2020 Maureen Jean <maureen.jean@intel.com> - 0.1-3.g9afaf5907
 - Update hdf5-vol and vol-test to g1d2a3acb4
 
 * Mon Oct  5 2020 Brian J. Murrell <brian.murrell@intel.com> - 0.1-2.gb324b90d4
