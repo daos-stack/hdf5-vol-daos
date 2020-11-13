@@ -1,7 +1,7 @@
 %global with_mpich 1
 %global with_openmpi3 1
 
-%global daos_major 1
+%global daos_major 0
 
 %if %{with_mpich}
 %global mpi_list mpich
