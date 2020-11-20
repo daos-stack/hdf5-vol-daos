@@ -32,7 +32,7 @@
 
 Name:    hdf5-vol-daos
 Version: 0.1
-Release: 2%{?relval}%{?dist}
+Release: 3%{?relval}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -197,6 +197,9 @@ done
 %endif
 
 %changelog
+* Fri Nov 20 2020 Maureen Jean <maureen.jean@intel.com> - 0.1-3.gb8e6afb18f
+- Update hdf5-vol to gb8e6afb18f and vol-test to gd3f80a57ca
+
 * Mon Oct  5 2020 Brian J. Murrell <brian.murrell@intel.com> - 0.1-2.gb324b90d4
 - Tests packages should not require any -devel packages
 

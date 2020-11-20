@@ -38,7 +38,7 @@ LEAP_15_PR_REPOS         ?= $(shell git show -s --format=%B | sed -ne 's/^PR-rep
 EL_7_PR_REPOS            ?= $(shell git show -s --format=%B | sed -ne 's/^PR-repos-el7: *\(.*\)/\1/p')
 UBUNTU_20_04_PR_REPOS    ?= $(shell git show -s --format=%B | sed -ne 's/^PR-repos-ubuntu20: *\(.*\)/\1/p')
 
-COMMON_RPM_ARGS  := --define "%_topdir $$PWD/_topdir" $(BUILD_DEFINES)
+COMMON_RPM_ARGS  := --define "_topdir $$PWD/_topdir" $(BUILD_DEFINES)
 SPEC             := $(shell if [ -f $(NAME)-$(DISTRO_BASE).spec ]; then echo $(NAME)-$(DISTRO_BASE).spec; else echo $(NAME).spec; fi)
 VERSION           = $(eval VERSION := $(shell rpm $(COMMON_RPM_ARGS) --specfile --qf '%{version}\n' $(SPEC) | sed -n '1p'))$(VERSION)
 DEB_RVERS        := $(subst $(DOT),\$(DOT),$(VERSION))
@@ -378,35 +378,47 @@ test:
 	$(call install_repos,$(REPO_NAME)@$(BRANCH_NAME):$(BUILD_NUMBER))
 	yum -y install $(TEST_PACKAGES)
 
+show_spec:
+	@echo '$(SPEC)'
+
+show_build_defines:
+	@echo '$(BUILD_DEFINES)'
+
+show_common_rpm_args:
+	@echo '$(COMMON_RPM_ARGS)'
+
 show_version:
-	@echo $(VERSION)
+	@echo '$(VERSION)'
 
 show_release:
-	@echo $(RELEASE)
+	@echo '$(RELEASE)'
 
 show_rpms:
-	@echo $(RPMS)
+	@echo '$(RPMS)'
 
 show_source:
-	@echo $(SOURCE)
+	@echo '$(SOURCE)'
 
 show_patches:
-	@echo $(PATCHES)
+	@echo '$(PATCHES)'
 
 show_sources:
-	@echo $(SOURCES)
+	@echo '$(SOURCES)'
+
+show_other_sources:
+	@echo '$(OTHER_SOURCES)'
 
 show_targets:
-	@echo $(TARGETS)
+	@echo '$(TARGETS)'
 
 show_makefiles:
-	@echo $(MAKEFILE_LIST)
+	@echo '$(MAKEFILE_LIST)'
 
 show_calling_makefile:
-	@echo $(CALLING_MAKEFILE)
+	@echo '$(CALLING_MAKEFILE)'
 
 show_git_metadata:
-	@echo $(GIT_SHA1):$(GIT_SHORT):$(GIT_NUM_COMMITS)
+	@echo '$(GIT_SHA1):$(GIT_SHORT):$(GIT_NUM_COMMITS)'
 
 .PHONY: srpm rpms debs deb_detar ls chrootbuild rpmlint FORCE        \
         show_version show_release show_rpms show_source show_sources \
