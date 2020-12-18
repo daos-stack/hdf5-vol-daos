@@ -1,7 +1,7 @@
 %global with_mpich 1
 %global with_openmpi3 1
 
-%global daos_major 0
+%global daos_major 1
 
 %if %{with_mpich}
 %global mpi_list mpich
@@ -32,7 +32,7 @@
 
 Name:    hdf5-vol-daos
 Version: 0.1
-Release: 3%{?relval}%{?dist}
+Release: 4%{?relval}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -197,6 +197,9 @@ done
 %endif
 
 %changelog
+* Mon Dec 14 2020 Kenneth Cain <kenneth.c.cain@intel.com> - 0.1-4.gb8e6afb18f
+- Update hdf5-vol to TBD and update virtual providess to build with libdaos.so.1
+
 * Fri Nov 20 2020 Maureen Jean <maureen.jean@intel.com> - 0.1-3.gb8e6afb18f
 - Update hdf5-vol to gb8e6afb18f and vol-test to gd3f80a57ca
 
