@@ -1,7 +1,7 @@
 NAME          := hdf5-vol-daos
 SRC_EXT       := gz
 TEST_PACKAGES := daos-devel $(NAME) $(NAME)-mpich $(NAME)-openmpi3 $(NAME)-mpich-devel $(NAME)-openmpi3-devel $(NAME)-mpich-tests $(NAME)-openmpi3-tests
-SOURCE_COMMIT := b8e6afb18f20a6722aeb446d39ed284977c275a2
+SOURCE_COMMIT := 17234b20a1141d0136dc74f5eae01f86d64d9313
 TEST_COMMIT   := d3f80a57ca252eaddd1978496a0cd7a56a7fdc09
 SOURCE        = $(SOURCE_COMMIT).tar.$(SRC_EXT)
 PATCHES       = $(TEST_COMMIT).tar.$(SRC_EXT)
