@@ -193,7 +193,7 @@ done
 %endif
 
 %changelog
-* Fri Jan 15 2021 Kenneth Cain <kenneth.c.cain@intel.com> - 0.1-4.gfcbdc0b
+* Wed Jan 20 2021 Kenneth Cain <kenneth.c.cain@intel.com> - 0.1-4.gfcbdc0b
 - Update hdf5-vol to fcbdc0b, and virtual provides to build with libdaos.so.1
 
 * Fri Nov 20 2020 Maureen Jean <maureen.jean@intel.com> - 0.1-3.gb8e6afb18f
