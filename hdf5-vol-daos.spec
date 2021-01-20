@@ -32,7 +32,7 @@
 
 Name:    hdf5-vol-daos
 Version: 0.1
-Release: 5%{?relval}%{?dist}
+Release: 4%{?relval}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -193,11 +193,8 @@ done
 %endif
 
 %changelog
-* Fri Jan 15 2021 Kenneth Cain <kenneth.c.cain@intel.com> - 0.1-5.gfcbdc0b
+* Fri Jan 15 2021 Kenneth Cain <kenneth.c.cain@intel.com> - 0.1-4.gfcbdc0b
 - Update hdf5-vol to fcbdc0b and virtual provides to build with libdaos.so.1
-
-* Fri Jan 15 2021 Kenneth Cain <kenneth.c.cain@intel.com> - 0.1-4.g17234b2
-- Update hdf5-vol to g17234b2 and remove unnecessary Requires: lines
 
 * Fri Nov 20 2020 Maureen Jean <maureen.jean@intel.com> - 0.1-3.gb8e6afb18f
 - Update hdf5-vol to gb8e6afb18f and vol-test to gd3f80a57ca
