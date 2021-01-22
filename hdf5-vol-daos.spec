@@ -32,7 +32,7 @@
 
 Name:    hdf5-vol-daos
 Version: 0.1
-Release: 4%{?relval}%{?dist}
+Release: 5%{?relval}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -72,6 +72,7 @@ HDF5 VOL DAOS with MPICH
 Summary: HDF5 VOL DAOS devel with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa}
 Requires: hdf5-mpich-devel%{?_isa}
+Requires: %{name}-mpich%{?_isa} = %{version}-%{release}
 Provides: %{name}-mpich2-devel = %{version}-%{release}
 
 %description mpich-devel
@@ -80,6 +81,7 @@ HDF5 VOL DAOS devel with MPICH
 %package mpich-tests
 Summary: HDF5 VOL DAOS tests with mpich
 BuildRequires: hdf5-mpich-devel%{?_isa}
+Requires: %{name}-mpich%{?_isa} = %{version}-%{release}
 Provides: %{name}-mpich2-tests-daos-%{daos_major} = %{version}-%{release}
 
 %description mpich-tests
@@ -101,6 +103,7 @@ HDF5 VOL DAOS with OpenMPI 3
 Summary: HDF5 VOL DAOS devel with OpenMPI 3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
 Requires: hdf5-openmpi3-devel%{?_isa}
+Requires: %{name}-openmpi3%{?_isa} = %{version}-%{release}
 Provides: %{name}-openmpi3-devel = %{version}-%{release}
 
 %description openmpi3-devel
@@ -109,6 +112,7 @@ HDF5 VOL DAOS devel with OpenMPI 3
 %package openmpi3-tests
 Summary: HDF5 VOL DAOS tests with openmpi3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
+Requires: %{name}-openmpi3%{?_isa} = %{version}-%{release}
 Provides: %{name}-openmpi3-tests-daos-%{daos_major} = %{version}-%{release}
 
 %description openmpi3-tests
@@ -193,6 +197,9 @@ done
 %endif
 
 %changelog
+* Fri Jan 22 2021 Kenneth Cain <kenneth.c.cain@intel.com> - 0.1-5.gfcbdc0b
+- restore requires for mpich-devel/tests and openmpi3-devel/tests
+
 * Wed Jan 20 2021 Kenneth Cain <kenneth.c.cain@intel.com> - 0.1-4.gfcbdc0b
 - Update hdf5-vol to fcbdc0b, and virtual provides to build with libdaos.so.1
 
