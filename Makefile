@@ -5,8 +5,8 @@ VOL_MAJOR     := 1
 VOL_MINOR     := 1
 VOL_RELEASE   := 0rc1
 TEST_VERSION  := 0.9.0
-SOURCE        := v%{vol_major}.%{vol_minor}.%{vol_release}.tar.$(SRC_EXT)
-PATCHES       := v%{test_version}.tar.$(SRC_EXT)
+SOURCE        := v$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE).tar.$(SRC_EXT)
+PATCHES       := v$(TEST_VERSION).tar.$(SRC_EXT)
 
 v$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE).tar.$(SRC_EXT):
        curl -f -L -O https://github.com/HDFGroup/vol-daos/archive/v$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE).tar.$(SRC_EXT)
