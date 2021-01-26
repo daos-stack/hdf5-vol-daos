@@ -7,8 +7,6 @@ VOL_RELEASE   := 0rc1
 TEST_VERSION  := 0.9.0
 BUILD_DEFINES := --define "%test_version $(TEST_VERSION)" --define "%vol_major $(VOL_MAJOR)"  --define "%vol_minor $(VOL_MINOR)"  --define "%vol_release $(VOL_RELEASE)"
 RPM_BUILD_OPTIONS := $(BUILD_DEFINES)
-DL_VERSION    := vol-daos-$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE)
-PATCHES       := vol-tests-$(TEST_VERSION)
 
 vol-daos-$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE).tar.$(SRC_EXT):
        curl -f -L -O https://github.com/HDFGroup/vol-daos/archive/v$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE).tar.$(SRC_EXT)
