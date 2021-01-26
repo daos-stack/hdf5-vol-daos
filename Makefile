@@ -10,10 +10,10 @@ RPM_BUILD_OPTIONS := $(BUILD_DEFINES)
 DL_VERSION    := vol-daos-$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE)
 PATCHES       := vol-tests-$(TEST_VERSION)
 
-include packaging/Makefile_packaging.mk
-
 vol-daos-$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE).tar.$(SRC_EXT):
        curl -f -L -O https://github.com/HDFGroup/vol-daos/archive/v$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE).tar.$(SRC_EXT)
 
 vol-tests-$(TEST_VERSION).tar.$(SRC_EXT):
        curl -f -L -O https://github.com/HDFGroup/vol-tests/archive/v$(TEST_VERSION).tar.$(SRC_EXT)
+
+include packaging/Makefile_packaging.mk
