@@ -4,13 +4,16 @@ TEST_PACKAGES := daos-devel $(NAME) $(NAME)-mpich $(NAME)-openmpi3 $(NAME)-mpich
 VOL_MAJOR     := 1
 VOL_MINOR     := 1
 VOL_RELEASE   := 0rc1
-TEST_COMMIT   := c6d8c31e14e7d43f3b02f8906e8ecab2726e76ba
-PATCHES       := $(TEST_COMMIT).tar.$(SRC_EXT)
-BUILD_DEFINES := --define "%vol_major $(VOL_MAJOR)"  --define "%vol_minor $(VOL_MINOR)"  --define "%vol_release $(VOL_RELEASE)" --define "%test_commit $(TEST_COMMIT)"
+TEST_VERSION  := 0.9.0
+BUILD_DEFINES := --define "%test_version $(TEST_VERSION)" --define "%vol_major $(VOL_MAJOR)"  --define "%vol_minor $(VOL_MINOR)"  --define "%vol_release $(VOL_RELEASE)" --define "%test_commit $(TEST_COMMIT)"
 RPM_BUILD_OPTIONS := $(BUILD_DEFINES)
 DL_VERSION    := vol-daos-$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE)
+PATCHES       := vol-tests-$(TEST_VERSION)
 
 include packaging/Makefile_packaging.mk
 
-$(TEST_COMMIT).tar.$(SRC_EXT):
-       curl -f -L -O https://github.com/HDFGroup/vol-tests/archive/$(TEST_COMMIT).tar.$(SRC_EXT)
+vol-daos-$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE).tar.$(SRC_EXT):
+       curl -f -L -O https://github.com/HDFGroup/vol-daos/archive/v$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE).tar.$(SRC_EXT)
+
+vol-tests-$(TEST_VERSION).tar.$(SRC_EXT):
+       curl -f -L -O https://github.com/HDFGroup/vol-tests/archive/v$(TEST_VERSION).tar.$(SRC_EXT)
