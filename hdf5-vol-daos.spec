@@ -39,9 +39,9 @@ Release: %{vol_release}%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
-URL: https://portal.hdfgroup.org/display/HDF5/HDF5
-Source0: https://github.com/HDFGroup/hdf5/archive/vol-daos-%{vol_major}.%{vol_minor}.%{vol_release}.tar.gz
-Source1: https://github.com/HDFGroup/hdf5/archive/%{test_commit}.tar.gz
+URL: https://github.com/HDFGroup/vol-daos/
+Source0: https://github.com/HDFGroup/vol-daos/archive/v%{vol_major}.%{vol_minor}.%{vol_release}.tar.gz
+Source1: https://github.com/HDFGroup/vol-tests/archive/%{test_commit}.tar.gz
 BuildRequires: daos-devel%{?_isa}
 BuildRequires: gcc, gcc-c++
 %if (0%{?suse_version} >= 1500)
