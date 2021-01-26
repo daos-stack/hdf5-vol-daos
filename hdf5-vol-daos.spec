@@ -121,7 +121,7 @@ HDF5 VOL DAOS tests with openmpi3
 %setup -n vol-tests-%{test_version}
 %setup -n vol-daos-%{vol_major}.%{vol_minor}.%{vol_release}
 %setup -T -D -b 1 -n vol-daos-%{vol_major}.%{vol_minor}.%{vol_release}
-mv ../vol-tests-%{test_commit}/* test/vol/
+mv ../vol-tests-%{test_version}/* test/vol/
 
 %build
 for mpi in %{?mpi_list}
