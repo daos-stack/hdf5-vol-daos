@@ -3,7 +3,7 @@
 
 %global daos_maojr 1
 
-%gloabl vol_test_tag 0.9.0
+%global vol_test_tag 0.9.0
 %global vol_major 1
 %global vol_minor 1
 %global vol_bugrelease 0
