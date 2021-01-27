@@ -31,8 +31,8 @@
 %endif
 
 Name:    hdf5-vol-daos
-Version: 0.1
-Release: 5%{?relval}%{?dist}
+Version: 1.1
+Release: 0rc1%{?relval}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -197,6 +197,10 @@ done
 %endif
 
 %changelog
+* Fri Nov 20 2020 Maureen Jean <maureen.jean@intel.com> - 1.1.0rc1.g9eebd90
+- Update hdf5-vol 1.1.0rc1. use commit vol-daos g9eebd90 
+- and vol-test gc6d8c31
+
 * Fri Jan 22 2021 Kenneth Cain <kenneth.c.cain@intel.com> - 0.1-5.gfcbdc0b
 - restore requires for mpich-devel/tests and openmpi3-devel/tests
 
