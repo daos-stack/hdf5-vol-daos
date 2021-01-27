@@ -141,6 +141,7 @@ do
         -DBUILD_TESTING=ON \
         -DHDF5_VOL_TEST_ENABLE_PART=ON \
         -DHDF5_VOL_TEST_ENABLE_PARALLEL=ON \
+        -DHDF5_VOL_TEST_ENABLE_ASYNC=ON \
         -DHDF5_VOL_DAOS_USE_SYSTEM_HDF5=OFF \
         -DMPI_C_COMPILER=%{mpi_libdir}/$mpi/bin/mpicc \
         -DCMAKE_SKIP_RPATH:BOOL=ON \
