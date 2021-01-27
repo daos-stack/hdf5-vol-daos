@@ -197,7 +197,7 @@ done
 %endif
 
 %changelog
-* Fri Nov 20 2020 Maureen Jean <maureen.jean@intel.com> - 1.1.0rc1.g9eebd90
+* Wed Jan 27 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0rc1.g9eebd90
 - Update hdf5-vol 1.1.0rc1. use commit vol-daos g9eebd90 
 - and vol-test gc6d8c31
 
