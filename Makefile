@@ -10,9 +10,9 @@ RPM_BUILD_OPTIONS := $(BUILD_DEFINES)
 
 
 $(SOURCE_VERSION).tar.$(SRC_EXT):
-       curl -f -L -O https://github.com/HDFGroup/vol-daos/archive/v$(VOL_MAJOR).$(VOL_MINOR).$(VOL_RELEASE).tar.$(SRC_EXT)
+       curl -f -L -O https://github.com/HDFGroup/vol-daos/archive/$(SOURCE_VERSION).tar.$(SRC_EXT)
 
 $(TEST_VERSION).tar.$(SRC_EXT):
-       curl -f -L -O https://github.com/HDFGroup/vol-tests/archive/v$(TEST_VERSION).tar.$(SRC_EXT)
+       curl -f -L -O https://github.com/HDFGroup/vol-tests/archive/$(TEST_VERSION).tar.$(SRC_EXT)
 
 include packaging/Makefile_packaging.mk
