@@ -40,8 +40,8 @@ Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
 URL: https://github.com/HDFGroup/vol-daos/
-Source0: %{source_version}.tar.gz
-Source1: %{test_version}.tar.gz
+Source0: v%{source_version}.tar.gz
+Source1: v%{test_version}.tar.gz
 BuildRequires: daos-devel%{?_isa}
 BuildRequires: gcc, gcc-c++
 %if (0%{?suse_version} >= 1500)
@@ -122,8 +122,8 @@ HDF5 VOL DAOS tests with openmpi3
 %endif
 
 %prep
-%setup -n vol-daos-%{vol_major}.%{vol_minor}.%{vol_release}
-%setup -T -D -b 1 -n vol-daos-%{vol_major}.%{vol_minor}.%{vol_release}
+%setup -n vol-daos-%{source_version}
+%setup -T -D -b 1 -n vol-daos-%{source_version}
 mv ../vol-tests-%{test_version}/* test/vol/
 
 %build
