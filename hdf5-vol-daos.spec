@@ -1,7 +1,14 @@
 %global with_mpich 1
 %global with_openmpi3 1
 
-%global daos_major 1
+%global daos_maojr 1
+
+%gloabl vol_test_tag 0.9.0
+%global vol_major 1
+%global vol_minor 1
+%global vol_bugrelease 0
+%global vol_prerelease rc1
+%global vol_tag  %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:%{vol_prerelease}}
 
 %if %{with_mpich}
 %global mpi_list mpich
@@ -31,14 +38,14 @@
 %endif
 
 Name:    hdf5-vol-daos
-Version: 1.1
-Release: 0rc1%{?relval}%{?dist}
+Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
+Release: 1%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
 URL: https://portal.hdfgroup.org/display/HDF5/HDF5
-Source0: %{source_commit}.tar.gz
-Source1: %{test_commit}.tar.gz
+Source0: https://github.com/HDFGroup/vol-daos/archive/v%{vol_tag}.tar.gz
+Source1: https://github.com/HDFGroup/vol-tests/archive/v%{vol_test_tag}.tar.gz
 
 BuildRequires: daos-devel%{?_isa}
 BuildRequires: gcc, gcc-c++
@@ -120,9 +127,9 @@ HDF5 VOL DAOS tests with openmpi3
 %endif
 
 %prep
-%setup -n vol-daos-%{source_commit}
-%setup -T -D -b 1 -n vol-daos-%{source_commit}
-mv ../vol-tests-%{test_commit}/* test/vol/
+%setup -n vol-daos-%{vol_tag}
+%setup -T -D -b 1 -n vol-daos-%{vol_tag}
+mv ../vol-tests-%{vol_test_tag}/* test/vol/
 
 %build
 for mpi in %{?mpi_list}
@@ -197,9 +204,8 @@ done
 %endif
 
 %changelog
-* Wed Jan 27 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0rc1.g9eebd90
-- Update hdf5-vol 1.1.0rc1. use commit vol-daos g9eebd90 
-- and vol-test gc6d8c31
+* Wed Jan 27 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc1
+- Update hdf5-vol v1.1.0rc1 and vol_tests v0.9.0
 
 * Fri Jan 22 2021 Kenneth Cain <kenneth.c.cain@intel.com> - 0.1-5.gfcbdc0b
 - restore requires for mpich-devel/tests and openmpi3-devel/tests
