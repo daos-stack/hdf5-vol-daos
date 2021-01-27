@@ -40,8 +40,8 @@ Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
 URL: https://github.com/HDFGroup/vol-daos/
-Source0: v%{vol_major}.%{vol_minor}.%{vol_release}.tar.gz
-Source1: v%{test_version}.tar.gz
+Source0: %{source_version}.tar.gz
+Source1: %{test_version}.tar.gz
 BuildRequires: daos-devel%{?_isa}
 BuildRequires: gcc, gcc-c++
 %if (0%{?suse_version} >= 1500)
