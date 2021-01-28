@@ -9,6 +9,8 @@ SHELL=/bin/bash
 # Put site overrides (i.e. REPOSITORY_URL, DAOS_STACK_*_LOCAL_REPO) in here
 -include Makefile.local
 
+include source_deps.mk
+
 # default to Leap 15 distro for chrootbuild
 CHROOT_NAME ?= opensuse-leap-15.2-x86_64
 include packaging/Makefile_distro_vars.mk
@@ -109,6 +111,11 @@ endef
 
 all: $(TARGETS)
 
+source_deps.mk:
+	for s in $(SOURCES); do \
+	    echo $${s##*/}:;    \
+	done > $@
+
 %/:
 	mkdir -p $@
 
@@ -139,23 +146,23 @@ endif
 
 $(DL_NAME)-$(DL_VERSION).tar.$(SRC_EXT).asc: $(SPEC) $(CALLING_MAKEFILE)
 	rm -f ./$(DL_NAME)-*.tar.{gz,bz*,xz}.asc
-	curl -f -L -O '$(SOURCE).asc'
+	spectool -g $(SPEC)
 
 $(DL_NAME)-$(DL_VERSION).tar.$(SRC_EXT).sig: $(SPEC) $(CALLING_MAKEFILE)
 	rm -f ./$(DL_NAME)-*.tar.{gz,bz*,xz}.sig
-	curl -f -L -O '$(SOURCE).sig'
+	spectool -g $(SPEC)
 
 $(DL_NAME)-$(DL_VERSION).tar.$(SRC_EXT): $(SPEC) $(CALLING_MAKEFILE)
 	rm -f ./$(DL_NAME)-*.tar.{gz,bz*,xz}
-	curl -f -L -O '$(SOURCE)'
+	spectool -g $(SPEC)
 
 v$(DL_VERSION).tar.$(SRC_EXT): $(SPEC) $(CALLING_MAKEFILE)
 	rm -f ./v*.tar.{gz,bz*,xz}
-	curl -f -L -O '$(SOURCE)'
+	spectool -g $(SPEC)
 
 $(DL_VERSION).tar.$(SRC_EXT): $(SPEC) $(CALLING_MAKEFILE)
 	rm -f ./*.tar.{gz,bz*,xz}
-	curl -f -L -O '$(SOURCE)'
+	spectool -g $(SPEC)
 
 $(DEB_TOP)/%: % | $(DEB_TOP)/
 
@@ -425,4 +432,4 @@ show_git_metadata:
 
 .PHONY: srpm rpms debs deb_detar ls chrootbuild rpmlint FORCE        \
         show_version show_release show_rpms show_source show_sources \
-        show_targets check-env show_git_metadata
+        show_targets check-env show_git_metadata source_deps.mk
