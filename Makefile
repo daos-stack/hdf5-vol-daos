@@ -7,6 +7,6 @@ include source_deps.mk
 include packaging/Makefile_packaging.mk
 
 source_deps.mk:
-for s in $(SOURCES); do \
-echo $${s##*/}:; \
-done > $@
+	for s in $(SOURCES); do \
+		echo $${s##*/}:; \
+	done > $@
