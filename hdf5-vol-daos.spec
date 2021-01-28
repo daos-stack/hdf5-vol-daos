@@ -1,8 +1,6 @@
 %global with_mpich 1
 %global with_openmpi3 1
 
-%global daos_maojr 1
-
 %global vol_test_tag 0.9.0
 %global vol_major 1
 %global vol_minor 1
@@ -57,7 +55,6 @@ BuildRequires: cmake3 >= 3.1
 BuildRequires: Lmod
 %endif
 BuildRequires: hdf5-devel%{?_isa}
-Provides:       %{name}-daos-%{daos_major} = %{version}-%{release}
 
 %description
 HDF5 VOL DAOS connector is used to leverage the
@@ -70,7 +67,6 @@ storage related calls into native daos storage operations
 Summary: HDF5 VOL DAOS with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa}
 Provides: %{name}-mpich2 = %{version}-%{release}
-Provides: %{name}-mpich2-daos-%{daos_major} = %{version}-%{release}
 
 %description mpich
 HDF5 VOL DAOS with MPICH
@@ -89,7 +85,6 @@ HDF5 VOL DAOS devel with MPICH
 Summary: HDF5 VOL DAOS tests with mpich
 BuildRequires: hdf5-mpich-devel%{?_isa}
 Requires: %{name}-mpich%{?_isa} = %{version}-%{release}
-Provides: %{name}-mpich2-tests-daos-%{daos_major} = %{version}-%{release}
 
 %description mpich-tests
 HDF5 VOL DAOS tests with mpich
@@ -101,7 +96,6 @@ HDF5 VOL DAOS tests with mpich
 Summary: HDF5 VOL DAOS with OpenMPI 3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
 Provides: %{name}-openmpi3 = %{version}-%{release}
-Provides: %{name}-openmpi3-daos-%{daos_major} = %{version}-%{release}
 
 %description openmpi3
 HDF5 VOL DAOS with OpenMPI 3
@@ -120,7 +114,6 @@ HDF5 VOL DAOS devel with OpenMPI 3
 Summary: HDF5 VOL DAOS tests with openmpi3
 BuildRequires: hdf5-openmpi3-devel%{?_isa}
 Requires: %{name}-openmpi3%{?_isa} = %{version}-%{release}
-Provides: %{name}-openmpi3-tests-daos-%{daos_major} = %{version}-%{release}
 
 %description openmpi3-tests
 HDF5 VOL DAOS tests with openmpi3
