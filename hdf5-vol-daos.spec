@@ -198,7 +198,7 @@ done
 %endif
 
 %changelog
-* Wed Jan 27 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc1
+* Thu Jan 28 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc1
 - Update hdf5-vol v1.1.0rc1 and vol_tests v0.9.0
 
 * Fri Jan 22 2021 Kenneth Cain <kenneth.c.cain@intel.com> - 0.1-5.gfcbdc0b
