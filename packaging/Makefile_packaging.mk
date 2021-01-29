@@ -131,7 +131,7 @@ _topdir/SOURCES/%: % | _topdir/SOURCES/
 # At least one spec file, SLURM (sles), has a different version for the
 # download file than the version in the spec file.
 ifeq ($(DL_VERSION),)
-DL_VERSION = $(VERSION)
+DL_VERSION = $(subst ~,,$(VERSION))
 endif
 ifeq ($(DL_NAME),)
 DL_NAME = $(NAME)
@@ -139,23 +139,23 @@ endif
 
 $(DL_NAME)-$(DL_VERSION).tar.$(SRC_EXT).asc: $(SPEC) $(CALLING_MAKEFILE)
 	rm -f ./$(DL_NAME)-*.tar.{gz,bz*,xz}.asc
-	curl -f -L -O '$(SOURCE).asc'
+	spectool -g $(SPEC)
 
 $(DL_NAME)-$(DL_VERSION).tar.$(SRC_EXT).sig: $(SPEC) $(CALLING_MAKEFILE)
 	rm -f ./$(DL_NAME)-*.tar.{gz,bz*,xz}.sig
-	curl -f -L -O '$(SOURCE).sig'
+	spectool -g $(SPEC)
 
 $(DL_NAME)-$(DL_VERSION).tar.$(SRC_EXT): $(SPEC) $(CALLING_MAKEFILE)
 	rm -f ./$(DL_NAME)-*.tar.{gz,bz*,xz}
-	curl -f -L -O '$(SOURCE)'
+	spectool -g $(SPEC)
 
 v$(DL_VERSION).tar.$(SRC_EXT): $(SPEC) $(CALLING_MAKEFILE)
 	rm -f ./v*.tar.{gz,bz*,xz}
-	curl -f -L -O '$(SOURCE)'
+	spectool -g $(SPEC)
 
 $(DL_VERSION).tar.$(SRC_EXT): $(SPEC) $(CALLING_MAKEFILE)
 	rm -f ./*.tar.{gz,bz*,xz}
-	curl -f -L -O '$(SOURCE)'
+	spectool -g $(SPEC)
 
 $(DEB_TOP)/%: % | $(DEB_TOP)/
 
@@ -361,6 +361,7 @@ packaging_check:
 	          --exclude \*.code-workspace                   \
 	          --exclude install                             \
 	          --exclude packaging                           \
+	          --exclude utils                               \
 	          -bur $(PACKAGING_CHECK_DIR)/ packaging/; then \
 	    exit 1;                                             \
 	fi
@@ -389,6 +390,9 @@ show_common_rpm_args:
 
 show_version:
 	@echo '$(VERSION)'
+
+show_dl_version:
+	@echo '$(DL_VERSION)'
 
 show_release:
 	@echo '$(RELEASE)'
