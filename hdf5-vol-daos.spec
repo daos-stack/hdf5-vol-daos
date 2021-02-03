@@ -198,7 +198,7 @@ done
 %endif
 
 %changelog
-* Wed Jan 03 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc2
+* Wed Feb 03 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc2
 - Update hdf5-vol v1.1.0rc2 and vol_tests v0.9.1
 
 * Fri Jan 29 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc1
