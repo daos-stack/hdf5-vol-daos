@@ -1,11 +1,11 @@
 %global with_mpich 1
 %global with_openmpi3 1
 
-%global vol_test_tag 0.9.0
+%global vol_test_tag 0.9.1
 %global vol_major 1
 %global vol_minor 1
 %global vol_bugrelease 0
-%global vol_prerelease rc1
+%global vol_prerelease rc2
 %global vol_tag  %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:%{vol_prerelease}}
 
 %if %{with_mpich}
@@ -198,6 +198,9 @@ done
 %endif
 
 %changelog
+* Wed Jan 03 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc2
+- Update hdf5-vol v1.1.0rc2 and vol_tests v0.9.1
+
 * Fri Jan 29 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc1
 - Update hdf5-vol v1.1.0rc1 and vol_tests v0.9.0
 
