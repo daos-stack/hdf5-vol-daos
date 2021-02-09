@@ -37,7 +37,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 1%{?commit:.git%{shortcommit}}%{?dist}
+Release: 2%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -199,10 +199,10 @@ done
 %endif
 
 %changelog
-* Mon Feb 08 2021 Jonathan Martinez Montes <jonathan.martinez.montes@intel.com> - 1.1.0~rc2
+* Mon Feb 08 2021 Jonathan Martinez Montes <jonathan.martinez.montes@intel.com> - 1.1.0~rc2-2
 - Add test h5daos_test_metadata_parallel
 
-* Wed Feb 03 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc2
+* Wed Feb 03 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc2-1
 - Update hdf5-vol v1.1.0rc2 and vol_tests v0.9.1
 
 * Fri Jan 29 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc1
