@@ -37,13 +37,14 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 2%{?commit:.git%{shortcommit}}%{?dist}
+Release: 3%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
 URL: https://portal.hdfgroup.org/display/HDF5/HDF5
 Source0: https://github.com/HDFGroup/vol-daos/archive/v%{vol_tag}.tar.gz
 Source1: https://github.com/HDFGroup/vol-tests/archive/v%{vol_test_tag}.tar.gz
+Patch0: vol-test-recovery.patch
 
 BuildRequires: daos-devel%{?_isa}
 BuildRequires: gcc, gcc-c++
@@ -123,6 +124,7 @@ HDF5 VOL DAOS tests with openmpi3
 %setup -n vol-daos-%{vol_tag}
 %setup -T -D -b 1 -n vol-daos-%{vol_tag}
 mv ../vol-tests-%{vol_test_tag}/* test/vol/
+%patch0 -p1 -b .vol-test-recovery
 
 %build
 for mpi in %{?mpi_list}
@@ -199,6 +201,9 @@ done
 %endif
 
 %changelog
+* Mon Feb 22 2021 Maureen Jean <maureen.jean@intel.com> - 1.1.0~rc2-3
+- Add patch to h5daos_test_recovery.c
+
 * Mon Feb 08 2021 Jonathan Martinez Montes <jonathan.martinez.montes@intel.com> - 1.1.0~rc2-2
 - Add test h5daos_test_metadata_parallel
 
