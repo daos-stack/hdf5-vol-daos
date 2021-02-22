@@ -1,14 +1,27 @@
+From 1256ebe43c636874ca0a52b75d478f8634d164a6 Mon Sep 17 00:00:00 2001
+From: Maureen Jean <mjean@boro-69.boro.hpdd.intel.com>
+Date: Mon, 22 Feb 2021 22:30:05 +0000
+Subject: [PATCH] Update for daos
+
+Signed-off-by: Maureen Jean <mjean@boro-69.boro.hpdd.intel.com>
+---
+ test/daos_vol/h5daos_test_recovery.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
+
 diff --git a/test/daos_vol/h5daos_test_recovery.c b/test/daos_vol/h5daos_test_recovery.c
-index 92c1c89..ff93f4f 100644
+index 92c1c89..bab1096 100644
 --- a/test/daos_vol/h5daos_test_recovery.c
 +++ b/test/daos_vol/h5daos_test_recovery.c
-@@ -113,6 +113,7 @@ static void inject_fault(d_rank_t which_server)
+@@ -111,8 +111,9 @@ static int figure_out_op(const char *);
+ static void inject_fault(d_rank_t which_server)
+ {
      struct d_tgt_list        targets;
-     int                             tgt = -1;
+-    int			     tgt = -1;
++    int                      tgt = -1;
      char                     dmg_cmd[100];
 +    char                     pool_string[256];
      int                      rc;
-
+ 
      if(MAINPROCESS) {
 @@ -132,12 +133,19 @@ static void inject_fault(d_rank_t which_server)
          /* Exclude the server from the pool */
@@ -23,14 +36,16 @@ index 92c1c89..ff93f4f 100644
 +#else
 +        uuid_unparse(pool_uuid, &pool_string[0]);
 +        snprintf(dmg_cmd, sizeof(dmg_cmd),
-+                               "dmg pool exclude -i --pool=%s --ranks=%d", pool_string, which_server);
++		                "dmg pool exclude -i --pool=%s --ranks=%d", pool_string, which_server);
 +        rc = system(dmg_cmd);
 +        if (rc != 0) {
-+                   printf(" %s failed with rc %#x\n", dmg_cmd, rc);
-+                       return;
-+                   }
++	            printf(" %s failed with rc %#x\n", dmg_cmd, rc);
++	                return;
++	            }
 +#endif
-
+ 
          fprintf(stdout, "\n\n\n\n        ========>>> Killed and excluded the server (rank %d)\n\n\n\n", which_server);
      }
+-- 
+2.26.2
 
