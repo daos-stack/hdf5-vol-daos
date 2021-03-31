@@ -199,7 +199,7 @@ done
 %endif
 
 %changelog
-* Mon Mar 31 2021 David Maldonado Moreno <david.maldonado.moreno@intel.com> - 1.1.0~rc3-1
+* Wed Mar 31 2021 David Maldonado Moreno <david.maldonado.moreno@intel.com> - 1.1.0~rc3-1
 - Update hdf5-vol v1.1.0rc3 and vol_tests v0.9.2
 
 * Mon Feb 08 2021 Jonathan Martinez Montes <jonathan.martinez.montes@intel.com> - 1.1.0~rc2-2
