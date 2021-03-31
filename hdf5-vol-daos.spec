@@ -1,11 +1,11 @@
 %global with_mpich 1
 %global with_openmpi3 1
 
-%global vol_test_tag 0.9.1
+%global vol_test_tag 0.9.2
 %global vol_major 1
 %global vol_minor 1
 %global vol_bugrelease 0
-%global vol_prerelease rc2
+%global vol_prerelease rc3
 %global vol_tag  %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:%{vol_prerelease}}
 
 %if %{with_mpich}
@@ -37,7 +37,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 2%{?commit:.git%{shortcommit}}%{?dist}
+Release: 1%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -199,6 +199,9 @@ done
 %endif
 
 %changelog
+* Wed Mar 31 2021 Jonathan Martinez Montes <jonathan.martinez.montes@intel.com> - 1.1.0~rc3-1
+- Update hdf5-vol v1.1.0rc3 and vol_tests v0.9.2
+
 * Mon Feb 08 2021 Jonathan Martinez Montes <jonathan.martinez.montes@intel.com> - 1.1.0~rc2-2
 - Add test h5daos_test_metadata_parallel
 
