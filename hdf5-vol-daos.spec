@@ -55,7 +55,7 @@ BuildRequires: cmake3 >= 3.1
 BuildRequires: Lmod
 %endif
 BuildRequires: hdf5-devel%{?_isa}
-BuildRequires: libuuid-devel
+BuildRequires: libuuid-devel, boost-devel
 
 %description
 HDF5 VOL DAOS connector is used to leverage the
