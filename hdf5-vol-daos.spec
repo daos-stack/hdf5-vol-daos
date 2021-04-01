@@ -57,6 +57,7 @@ BuildRequires: Lmod
 BuildRequires: hdf5-devel%{?_isa}
 BuildRequires: libuuid-devel
 BuildRequires: boost-devel
+BuildRequires: boost-python36-devel
 
 %description
 HDF5 VOL DAOS connector is used to leverage the
