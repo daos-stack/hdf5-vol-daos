@@ -50,14 +50,14 @@ BuildRequires: gcc, gcc-c++
 %if (0%{?suse_version} >= 1500)
 BuildRequires: cmake >= 3.1
 BuildRequires: lua-lmod
+BuildRequires: boost-devel
 %else
 BuildRequires: cmake3 >= 3.1
 BuildRequires: Lmod
+BuildRequires: boost-python36-devel
 %endif
 BuildRequires: hdf5-devel%{?_isa}
 BuildRequires: libuuid-devel
-BuildRequires: boost-devel
-BuildRequires: boost-python36-devel
 
 %description
 HDF5 VOL DAOS connector is used to leverage the
