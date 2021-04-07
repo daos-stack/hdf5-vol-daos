@@ -44,17 +44,16 @@ License: GPL
 URL: https://portal.hdfgroup.org/display/HDF5/HDF5
 Source0: https://github.com/HDFGroup/vol-daos/archive/v%{vol_tag}.tar.gz
 Source1: https://github.com/HDFGroup/vol-tests/archive/v%{vol_test_tag}.tar.gz
+Patch0: https://github.com/HDFGroup/vol-daos/commit/34db47e61d48988458a251af7148f15b1ecec8b8.patch
 
 BuildRequires: daos-devel%{?_isa}
 BuildRequires: gcc, gcc-c++
 %if (0%{?suse_version} >= 1500)
 BuildRequires: cmake >= 3.1
 BuildRequires: lua-lmod
-BuildRequires: boost-devel
 %else
 BuildRequires: cmake3 >= 3.1
 BuildRequires: Lmod
-BuildRequires: boost-python36-devel
 %endif
 BuildRequires: hdf5-devel%{?_isa}
 BuildRequires: libuuid-devel
@@ -125,6 +124,7 @@ HDF5 VOL DAOS tests with openmpi3
 %prep
 %setup -n vol-daos-%{vol_tag}
 %setup -T -D -b 1 -n vol-daos-%{vol_tag}
+%patch0 -p1 -b .34db47e61d48988458a251af7148f15b1ecec8b8.patch
 mv ../vol-tests-%{vol_test_tag}/* test/vol/
 
 %build
@@ -202,6 +202,9 @@ done
 %endif
 
 %changelog
+* Wed Apr 07 2021 David Maldonado Moreno <david.maldonado.moreno@intel.com> - 1.1.0~rc3-2
+- Add 34db47e patch that removes the boost dependencies
+
 * Wed Mar 31 2021 David Maldonado Moreno <david.maldonado.moreno@intel.com> - 1.1.0~rc3-1
 - Update hdf5-vol v1.1.0rc3 and vol_tests v0.9.2
 
