@@ -201,7 +201,7 @@ done
 %endif
 
 %changelog
-* Tue Apr 06 2021 Jonathan Martinez Montes <jonathan.martinez.montes@intel.com> - 1.1.0~rc3-2
+* Wed Apr 07 2021 Jonathan Martinez Montes <jonathan.martinez.montes@intel.com> - 1.1.0~rc3-2
 - Add 34db47e patch that remove the boost dependencies
 
 * Wed Mar 31 2021 David Maldonado Moreno <david.maldonado.moreno@intel.com> - 1.1.0~rc3-1
