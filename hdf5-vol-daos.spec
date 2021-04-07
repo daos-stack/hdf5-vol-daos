@@ -124,6 +124,7 @@ HDF5 VOL DAOS tests with openmpi3
 %prep
 %setup -n vol-daos-%{vol_tag}
 %setup -T -D -b 1 -n vol-daos-%{vol_tag}
+%patch0 -p1 -b .34db47e61d48988458a251af7148f15b1ecec8b8.patch
 mv ../vol-tests-%{vol_test_tag}/* test/vol/
 
 %build
