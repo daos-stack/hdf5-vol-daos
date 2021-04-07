@@ -202,10 +202,8 @@ done
 %endif
 
 %changelog
-* Wed Apr 07 2021 David Maldonado Moreno <david.maldonado.moreno@intel.com> - 1.1.0~rc3-2
+* Wed Apr 07 2021 David Maldonado Moreno <david.maldonado.moreno@intel.com> - 1.1.0~rc3-1
 - Add 34db47e patch that removes the boost dependencies
-
-* Wed Mar 31 2021 David Maldonado Moreno <david.maldonado.moreno@intel.com> - 1.1.0~rc3-1
 - Update hdf5-vol v1.1.0rc3 and vol_tests v0.9.2
 
 * Mon Feb 08 2021 Jonathan Martinez Montes <jonathan.martinez.montes@intel.com> - 1.1.0~rc2-2
