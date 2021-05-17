@@ -57,6 +57,8 @@ Source1: https://github.com/HDFGroup/vol-tests/archive/v%{vol_test_tag}.tar.gz
 BuildRequires: daos-devel%{?_isa}
 # Temporarily needed until daos-devel R: libuuid-devel
 BuildRequires: libuuid-devel
+# Should this be in daos-devel R: boost-devel?
+BuildRequires: boost-devel
 BuildRequires: gcc, gcc-c++
 %if (0%{?suse_version} >= 1500)
 BuildRequires: cmake >= 3.1
