@@ -160,8 +160,7 @@ HDF5 VOL DAOS tests with mpich
 mv ../vol-tests-%{vol_test_tag}/* test/vol/
 
 %build
-for mpi in %{?mpi_list}
-do
+for mpi in %{?mpi_list}; do
   mkdir $mpi
   pushd $mpi
   %module_load $mpi
@@ -180,18 +179,17 @@ do
 done
 
 %install
-for mpi in %{?mpi_list}
-do
+for mpi in %{?mpi_list}; do
   %module_load $mpi
   %{make_install} -C $mpi
   module purge
-  mkdir -p ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
+  mkdir -p ${RPM_BUILD_ROOT}%{_libdir}/{$mpi/hdf5_vol_daos-tests,hdf5_vol_daos/$mpi}/
+  ln -s ../../$mpi/hdf5_vol_daos-tests ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests
   for x in h5_test_testhdf5 h5vl_test h5_partest_t_bigio h5_partest_testphdf5 \
            h5vl_test_parallel h5_partest_t_shapesame h5daos_test_map \
            h5daos_test_map_parallel h5daos_test_oclass \
-           h5daos_test_metadata_parallel
-  do
-    install -m 0755 $mpi/bin/${x} ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
+           h5daos_test_metadata_parallel; do
+    install -m 0755 $mpi/bin/${x} ${RPM_BUILD_ROOT}%{_libdir}/$mpi/hdf5_vol_daos-tests/
   done
   module purge
 done
@@ -213,6 +211,7 @@ done
 
 %files openmpi-tests
 %license COPYING
+%{_libdir}/openmpi/hdf5_vol_daos-tests
 %{_libdir}/hdf5_vol_daos/openmpi/tests
 %endif
 
@@ -230,6 +229,7 @@ done
 
 %files openmpi3-tests
 %license COPYING
+%{_libdir}/openmpi3/hdf5_vol_daos-tests
 %{_libdir}/hdf5_vol_daos/openmpi3/tests
 %endif
 
@@ -248,12 +248,15 @@ done
 
 %files mpich-tests
 %license COPYING
+%{_libdir}/mpich/hdf5_vol_daos-tests
 %{_libdir}/hdf5_vol_daos/mpich/tests
 %endif
 
 %changelog
 * Mon May 17 2021 Brian J. Murrell <brian.murrell@intel.com> - 1.1.0~rc2-3
 - Package for openmpi on EL8
+- Move tests under %%_libdir/$mpi to keep the dependency generator happy
+  - But keep backward compatible paths
 
 * Mon Feb 08 2021 Jonathan Martinez Montes <jonathan.martinez.montes@intel.com> - 1.1.0~rc2-2
 - Add test h5daos_test_metadata_parallel
