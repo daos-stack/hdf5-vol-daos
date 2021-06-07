@@ -1,11 +1,11 @@
 %global with_mpich 1
 %global with_openmpi3 1
 
-%global vol_test_tag 0.9.1
+%global vol_test_tag 0.9.2
 %global vol_major 1
 %global vol_minor 1
 %global vol_bugrelease 0
-%global vol_prerelease rc2
+%global vol_prerelease rc3
 %global vol_tag  %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:%{vol_prerelease}}
 
 %if %{with_mpich}
@@ -37,13 +37,14 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 2%{?commit:.git%{shortcommit}}%{?dist}
+Release: 1%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
 URL: https://portal.hdfgroup.org/display/HDF5/HDF5
 Source0: https://github.com/HDFGroup/vol-daos/archive/v%{vol_tag}.tar.gz
 Source1: https://github.com/HDFGroup/vol-tests/archive/v%{vol_test_tag}.tar.gz
+Patch0: https://github.com/HDFGroup/vol-daos/commit/34db47e61d48988458a251af7148f15b1ecec8b8.patch
 
 BuildRequires: daos-devel%{?_isa}
 BuildRequires: gcc, gcc-c++
@@ -55,6 +56,7 @@ BuildRequires: cmake3 >= 3.1
 BuildRequires: Lmod
 %endif
 BuildRequires: hdf5-devel%{?_isa}
+BuildRequires: libuuid-devel
 
 %description
 HDF5 VOL DAOS connector is used to leverage the
@@ -122,6 +124,7 @@ HDF5 VOL DAOS tests with openmpi3
 %prep
 %setup -n vol-daos-%{vol_tag}
 %setup -T -D -b 1 -n vol-daos-%{vol_tag}
+%patch0 -p1 -b .34db47e61d48988458a251af7148f15b1ecec8b8.patch
 mv ../vol-tests-%{vol_test_tag}/* test/vol/
 
 %build
@@ -199,6 +202,10 @@ done
 %endif
 
 %changelog
+* Wed Apr 07 2021 David Maldonado Moreno <david.maldonado.moreno@intel.com> - 1.1.0~rc3-1
+- Add 34db47e patch that removes the boost dependencies
+- Update hdf5-vol v1.1.0rc3 and vol_tests v0.9.2
+
 * Mon Feb 08 2021 Jonathan Martinez Montes <jonathan.martinez.montes@intel.com> - 1.1.0~rc2-2
 - Add test h5daos_test_metadata_parallel
 
