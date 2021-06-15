@@ -9,8 +9,11 @@ SHELL=/bin/bash
 # Put site overrides (i.e. REPOSITORY_URL, DAOS_STACK_*_LOCAL_REPO) in here
 -include Makefile.local
 
+ifeq ($(MAKECMDGOALS),chrootbuild)
 # default to Leap 15 distro for chrootbuild
 CHROOT_NAME ?= opensuse-leap-15.2-x86_64
+endif
+
 include packaging/Makefile_distro_vars.mk
 
 ifeq ($(DEB_NAME),)
@@ -379,6 +382,9 @@ test:
 	# Test the rpmbuild by installing the built RPM
 	$(call install_repos,$(REPO_NAME)@$(BRANCH_NAME):$(BUILD_NUMBER))
 	yum -y install $(TEST_PACKAGES)
+
+show_VARIABLES:
+	$(foreach v, $(.VARIABLES), $(info $(v) = $($(v))))
 
 show_spec:
 	@echo '$(SPEC)'
