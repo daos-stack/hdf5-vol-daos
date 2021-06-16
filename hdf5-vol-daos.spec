@@ -1,5 +1,11 @@
 %global with_mpich 1
+%if (0%{?rhel} >= 8)
+%global with_openmpi 1
+%global with_openmpi3 0
+%else
+%global with_openmpi 0
 %global with_openmpi3 1
+%endif
 
 %global vol_test_tag 0.9.2
 %global vol_major 1
@@ -10,6 +16,9 @@
 
 %if %{with_mpich}
 %global mpi_list mpich
+%endif
+%if %{with_openmpi}
+%global mpi_list %{?mpi_list} openmpi
 %endif
 %if %{with_openmpi3}
 %global mpi_list %{?mpi_list} openmpi3
@@ -37,7 +46,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 1%{?commit:.git%{shortcommit}}%{?dist}
+Release: 2%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -47,6 +56,10 @@ Source1: https://github.com/HDFGroup/vol-tests/archive/v%{vol_test_tag}.tar.gz
 Patch0: https://github.com/HDFGroup/vol-daos/commit/34db47e61d48988458a251af7148f15b1ecec8b8.patch
 
 BuildRequires: daos-devel%{?_isa}
+# Temporarily needed until daos-devel R: libuuid-devel
+BuildRequires: libuuid-devel
+# Should this be in daos-devel R: boost-devel?
+BuildRequires: boost-devel
 BuildRequires: gcc, gcc-c++
 %if (0%{?suse_version} >= 1500)
 BuildRequires: cmake >= 3.1
@@ -64,10 +77,62 @@ capabilities of the DAOS object storage system
 within an HDF5 application.  It translates HDF5 VOL
 storage related calls into native daos storage operations
 
+%if %{with_openmpi}
+%package openmpi
+Summary: HDF5 VOL DAOS with OpenMPI 3
+BuildRequires: hdf5-openmpi-devel%{?_isa} >= 1.12.1
+Provides: %{name}-openmpi = %{version}-%{release}
+
+%description openmpi
+HDF5 VOL DAOS with OpenMPI 3
+
+%package openmpi-devel
+Summary: HDF5 VOL DAOS devel with OpenMPI 3
+Requires: hdf5-openmpi-devel%{?_isa}
+Requires: %{name}-openmpi%{?_isa} = %{version}-%{release}
+Provides: %{name}-openmpi-devel = %{version}-%{release}
+
+%description openmpi-devel
+HDF5 VOL DAOS devel with OpenMPI 3
+
+%package openmpi-tests
+Summary: HDF5 VOL DAOS tests with openmpi
+Requires: %{name}-openmpi%{?_isa} = %{version}-%{release}
+
+%description openmpi-tests
+HDF5 VOL DAOS tests with openmpi
+%endif
+
+%if %{with_openmpi3}
+%package openmpi3
+Summary: HDF5 VOL DAOS with OpenMPI 3
+BuildRequires: hdf5-openmpi3-devel%{?_isa} >= 1.12.1
+Provides: %{name}-openmpi3 = %{version}-%{release}
+
+%description openmpi3
+HDF5 VOL DAOS with OpenMPI 3
+
+%package openmpi3-devel
+Summary: HDF5 VOL DAOS devel with OpenMPI 3
+Requires: hdf5-openmpi3-devel%{?_isa} >= 1.12.1
+Requires: %{name}-openmpi3%{?_isa} = %{version}-%{release}
+Provides: %{name}-openmpi3-devel = %{version}-%{release}
+
+%description openmpi3-devel
+HDF5 VOL DAOS devel with OpenMPI 3
+
+%package openmpi3-tests
+Summary: HDF5 VOL DAOS tests with openmpi3
+Requires: %{name}-openmpi3%{?_isa} = %{version}-%{release}
+
+%description openmpi3-tests
+HDF5 VOL DAOS tests with openmpi3
+%endif
+
 %if %{with_mpich}
 %package mpich
 Summary: HDF5 VOL DAOS with MPICH
-BuildRequires: hdf5-mpich-devel%{?_isa}
+BuildRequires: hdf5-mpich-devel%{?_isa} >= 1.12.1
 Provides: %{name}-mpich2 = %{version}-%{release}
 
 %description mpich
@@ -75,7 +140,6 @@ HDF5 VOL DAOS with MPICH
 
 %package mpich-devel
 Summary: HDF5 VOL DAOS devel with MPICH
-BuildRequires: hdf5-mpich-devel%{?_isa}
 Requires: hdf5-mpich-devel%{?_isa}
 Requires: %{name}-mpich%{?_isa} = %{version}-%{release}
 Provides: %{name}-mpich2-devel = %{version}-%{release}
@@ -85,40 +149,11 @@ HDF5 VOL DAOS devel with MPICH
 
 %package mpich-tests
 Summary: HDF5 VOL DAOS tests with mpich
-BuildRequires: hdf5-mpich-devel%{?_isa}
 Requires: %{name}-mpich%{?_isa} = %{version}-%{release}
 
 %description mpich-tests
 HDF5 VOL DAOS tests with mpich
 
-%endif
-
-%if %{with_openmpi3}
-%package openmpi3
-Summary: HDF5 VOL DAOS with OpenMPI 3
-BuildRequires: hdf5-openmpi3-devel%{?_isa}
-Provides: %{name}-openmpi3 = %{version}-%{release}
-
-%description openmpi3
-HDF5 VOL DAOS with OpenMPI 3
-
-%package openmpi3-devel
-Summary: HDF5 VOL DAOS devel with OpenMPI 3
-BuildRequires: hdf5-openmpi3-devel%{?_isa}
-Requires: hdf5-openmpi3-devel%{?_isa}
-Requires: %{name}-openmpi3%{?_isa} = %{version}-%{release}
-Provides: %{name}-openmpi3-devel = %{version}-%{release}
-
-%description openmpi3-devel
-HDF5 VOL DAOS devel with OpenMPI 3
-
-%package openmpi3-tests
-Summary: HDF5 VOL DAOS tests with openmpi3
-BuildRequires: hdf5-openmpi3-devel%{?_isa}
-Requires: %{name}-openmpi3%{?_isa} = %{version}-%{release}
-
-%description openmpi3-tests
-HDF5 VOL DAOS tests with openmpi3
 %endif
 
 %prep
@@ -128,8 +163,7 @@ HDF5 VOL DAOS tests with openmpi3
 mv ../vol-tests-%{vol_test_tag}/* test/vol/
 
 %build
-for mpi in %{?mpi_list}
-do
+for mpi in %{?mpi_list}; do
   mkdir $mpi
   pushd $mpi
   %module_load $mpi
@@ -148,40 +182,40 @@ do
 done
 
 %install
-for mpi in %{?mpi_list}
-do
+for mpi in %{?mpi_list}; do
   %module_load $mpi
   %{make_install} -C $mpi
   module purge
-  mkdir -p ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
+  mkdir -p ${RPM_BUILD_ROOT}%{_libdir}/{$mpi/hdf5_vol_daos-tests,hdf5_vol_daos/$mpi}/
+  ln -s ../../$mpi/hdf5_vol_daos-tests ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests
   for x in h5_test_testhdf5 h5vl_test h5_partest_t_bigio h5_partest_testphdf5 \
            h5vl_test_parallel h5_partest_t_shapesame h5daos_test_map \
            h5daos_test_map_parallel h5daos_test_oclass \
-           h5daos_test_metadata_parallel
-  do
-    install -m 0755 $mpi/bin/${x} ${RPM_BUILD_ROOT}%{_libdir}/hdf5_vol_daos/$mpi/tests/
+           h5daos_test_metadata_parallel; do
+    install -m 0755 $mpi/bin/${x} ${RPM_BUILD_ROOT}%{_libdir}/$mpi/hdf5_vol_daos-tests/
   done
+  module purge
 done
 
 %files
 %license COPYING
 
-%if %{with_mpich}
-%files mpich
+%if %{with_openmpi}
+%files openmpi
 %license COPYING
-%{mpi_libdir}/mpich/lib/libhdf5_vol_daos.so.*
-%{mpi_libdir}/mpich/share
+%{mpi_libdir}/openmpi/lib/libhdf5_vol_daos.so.*
+%{mpi_libdir}/openmpi/share
 
-
-%files mpich-devel
+%files openmpi-devel
 %license COPYING
-%{mpi_libdir}/mpich/lib/libhdf5_vol_daos.so
-%{mpi_libdir}/mpich/lib/pkgconfig/
-%{mpi_libdir}/mpich/include/*.h
+%{mpi_libdir}/openmpi/lib/libhdf5_vol_daos.so
+%{mpi_libdir}/openmpi/lib/pkgconfig/
+%{mpi_libdir}/openmpi/include/*.h
 
-%files mpich-tests
+%files openmpi-tests
 %license COPYING
-%{_libdir}/hdf5_vol_daos/mpich/tests
+%{_libdir}/openmpi/hdf5_vol_daos-tests
+%{_libdir}/hdf5_vol_daos/openmpi/tests
 %endif
 
 %if %{with_openmpi3}
@@ -198,10 +232,35 @@ done
 
 %files openmpi3-tests
 %license COPYING
+%{_libdir}/openmpi3/hdf5_vol_daos-tests
 %{_libdir}/hdf5_vol_daos/openmpi3/tests
 %endif
 
+%if %{with_mpich}
+%files mpich
+%license COPYING
+%{mpi_libdir}/mpich/lib/libhdf5_vol_daos.so.*
+%{mpi_libdir}/mpich/share
+
+
+%files mpich-devel
+%license COPYING
+%{mpi_libdir}/mpich/lib/libhdf5_vol_daos.so
+%{mpi_libdir}/mpich/lib/pkgconfig/
+%{mpi_libdir}/mpich/include/*.h
+
+%files mpich-tests
+%license COPYING
+%{_libdir}/mpich/hdf5_vol_daos-tests
+%{_libdir}/hdf5_vol_daos/mpich/tests
+%endif
+
 %changelog
+* Mon May 17 2021 Brian J. Murrell <brian.murrell@intel.com> - 1.1.0~rc3-2
+- Package for openmpi on EL8
+- Move tests under %%_libdir/$mpi to keep the dependency generator happy
+  - But keep backward compatible paths
+
 * Wed Apr 07 2021 David Maldonado Moreno <david.maldonado.moreno@intel.com> - 1.1.0~rc3-1
 - Add 34db47e patch that removes the boost dependencies
 - Update hdf5-vol v1.1.0rc3 and vol_tests v0.9.2
