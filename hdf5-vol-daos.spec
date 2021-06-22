@@ -54,6 +54,7 @@ URL: https://portal.hdfgroup.org/display/HDF5/HDF5
 Source0: https://github.com/HDFGroup/vol-daos/archive/v%{vol_tag}.tar.gz
 Source1: https://github.com/HDFGroup/vol-tests/archive/v%{vol_test_tag}.tar.gz
 Patch0: https://github.com/HDFGroup/vol-daos/commit/34db47e61d48988458a251af7148f15b1ecec8b8.patch
+Patch1: https://github.com/HDFGroup/vol-daos/commit/5eed612db03458c1b21e18f13fa2d1cb51e96193.patch
 
 BuildRequires: daos-devel%{?_isa}
 # Temporarily needed until daos-devel R: libuuid-devel
@@ -160,6 +161,7 @@ HDF5 VOL DAOS tests with mpich
 %setup -n vol-daos-%{vol_tag}
 %setup -T -D -b 1 -n vol-daos-%{vol_tag}
 %patch0 -p1 -b .34db47e61d48988458a251af7148f15b1ecec8b8.patch
+%patch1 -p1 -b .5eed612db03458c1b21e18f13fa2d1cb51e96193.patch
 mv ../vol-tests-%{vol_test_tag}/* test/vol/
 
 %build
@@ -256,6 +258,9 @@ done
 %endif
 
 %changelog
+* Tue Jun 22 2021 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc3-3
+- Add patch for uns initializing
+
 * Mon May 17 2021 Brian J. Murrell <brian.murrell@intel.com> - 1.1.0~rc3-2
 - Package for openmpi on EL8
 - Move tests under %%_libdir/$mpi to keep the dependency generator happy
