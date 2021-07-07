@@ -63,10 +63,10 @@ BuildRequires: libuuid-devel
 BuildRequires: boost-devel
 BuildRequires: gcc, gcc-c++
 %if (0%{?suse_version} >= 1500)
-BuildRequires: cmake >= 3.1, cmake < 3.15
+BuildRequires: cmake >= 3.15.1
 BuildRequires: lua-lmod
 %else
-BuildRequires: cmake3 >= 3.1, cmake3 < 3.15
+BuildRequires: cmake3 >= 3.1
 BuildRequires: Lmod
 %endif
 BuildRequires: hdf5-devel%{?_isa}
