@@ -171,6 +171,7 @@ for mpi in %{?mpi_list}; do
   %module_load $mpi
   %{cmake} -DCMAKE_INSTALL_PREFIX=%{mpi_libdir}/$mpi \
         -DBUILD_TESTING=ON \
+        -DSTATIC=OFF \
         -DHDF5_VOL_TEST_ENABLE_PART=ON \
         -DHDF5_VOL_TEST_ENABLE_PARALLEL=ON \
         -DHDF5_VOL_TEST_ENABLE_ASYNC=ON \
