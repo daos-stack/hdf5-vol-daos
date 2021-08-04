@@ -136,6 +136,7 @@ HDF5 VOL DAOS tests with openmpi3
 %package mpich
 Summary: HDF5 VOL DAOS with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa} >= 1.12.1
+BuildRequires: libfabric-devel
 Provides: %{name}-mpich2 = %{version}-%{release}
 
 %description mpich
@@ -266,6 +267,7 @@ done
 %changelog
 * Wed Aug 4 2021 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc3-4
 - Add patch for vol test fixes for DAOS
+- add libfabric-devel
 
 * Tue Jun 22 2021 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc3-3
 - Add patch for uns initializing
