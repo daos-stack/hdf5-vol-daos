@@ -176,6 +176,8 @@ for mpi in %{?mpi_list}; do
         -DHDF5_VOL_TEST_ENABLE_ASYNC=ON \
         -DHDF5_VOL_DAOS_USE_SYSTEM_HDF5=OFF \
         -DMPI_C_COMPILER=%{mpi_libdir}/$mpi/bin/mpicc \
+        -DMPI_CXX_COMPILER=%{mpi_libdir}/$mpi/bin/mpixx \
+        -DMPI_Fortran_COMPILER=%{mpi_libdir}/$mpi/bin/mpif90 \
         -DCMAKE_SKIP_RPATH:BOOL=ON \
         ..
   %{make_build}
