@@ -46,7 +46,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 3%{?commit:.git%{shortcommit}}%{?dist}
+Release: 4%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -55,6 +55,8 @@ Source0: https://github.com/HDFGroup/vol-daos/archive/v%{vol_tag}.tar.gz
 Source1: https://github.com/HDFGroup/vol-tests/archive/v%{vol_test_tag}.tar.gz
 Patch0: https://github.com/HDFGroup/vol-daos/commit/34db47e61d48988458a251af7148f15b1ecec8b8.patch
 Patch1: https://github.com/HDFGroup/vol-daos/commit/5eed612db03458c1b21e18f13fa2d1cb51e96193.patch
+Patch2: https://github.com/HDFGroup/vol-tests/commit/e29abaf69233e014e6e26cf927cc55934c178128.patch
+Patch3: https://github.com/HDFGroup/vol-tests/commit/8a4d3079ebf7ddb4222183f03be6e7bd33a86ee2.patch
 
 BuildRequires: daos-devel%{?_isa}
 # Temporarily needed until daos-devel R: libuuid-devel
@@ -134,6 +136,7 @@ HDF5 VOL DAOS tests with openmpi3
 %package mpich
 Summary: HDF5 VOL DAOS with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa} >= 1.12.1
+BuildRequires: libfabric-devel
 Provides: %{name}-mpich2 = %{version}-%{release}
 
 %description mpich
@@ -162,6 +165,10 @@ HDF5 VOL DAOS tests with mpich
 %setup -T -D -b 1 -n vol-daos-%{vol_tag}
 %patch0 -p1 -b .34db47e61d48988458a251af7148f15b1ecec8b8.patch
 %patch1 -p1 -b .5eed612db03458c1b21e18f13fa2d1cb51e96193.patch
+cd ../vol-tests-%{vol_test_tag}/
+%patch2 -p1 -b .e29abaf69233e014e6e26cf927cc55934c178128.patch
+%patch3 -p1 -b .8a4d3079ebf7ddb4222183f03be6e7bd33a86ee2.patch
+cd ../vol-daos-%{vol_tag}
 mv ../vol-tests-%{vol_test_tag}/* test/vol/
 
 %build
@@ -258,6 +265,10 @@ done
 %endif
 
 %changelog
+* Wed Aug 4 2021 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc3-4
+- Add patch for vol test fixes for DAOS
+- add libfabric-devel
+
 * Tue Jun 22 2021 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc3-3
 - Add patch for uns initializing
 
