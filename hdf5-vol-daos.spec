@@ -46,7 +46,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 4%{?commit:.git%{shortcommit}}%{?dist}
+Release: 5%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -84,6 +84,9 @@ storage related calls into native daos storage operations
 %package openmpi
 Summary: HDF5 VOL DAOS with OpenMPI 3
 BuildRequires: hdf5-openmpi-devel%{?_isa} >= 1.12.1
+%if (0%{?rhel} < 8)
+Requires: hdf5-openmpi%{?_isa}
+%endif
 Provides: %{name}-openmpi = %{version}-%{release}
 
 %description openmpi
@@ -110,6 +113,9 @@ HDF5 VOL DAOS tests with openmpi
 %package openmpi3
 Summary: HDF5 VOL DAOS with OpenMPI 3
 BuildRequires: hdf5-openmpi3-devel%{?_isa} >= 1.12.1
+%if (0%{?rhel} < 8)
+Requires: hdf5-openmpi3%{?_isa}
+%endif
 Provides: %{name}-openmpi3 = %{version}-%{release}
 
 %description openmpi3
@@ -137,6 +143,9 @@ HDF5 VOL DAOS tests with openmpi3
 Summary: HDF5 VOL DAOS with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa} >= 1.12.1
 BuildRequires: libfabric-devel
+%if (0%{?rhel} < 8)
+Requires: hdf5-mpich%{?_isa}
+%endif
 Provides: %{name}-mpich2 = %{version}-%{release}
 
 %description mpich
@@ -265,6 +274,9 @@ done
 %endif
 
 %changelog
+* Tue Sep 21 2021 Brian J. Murrell <brian.murrell@intel.com> - 1.1.0~rc3-5
+- Add R: hdf5-$mpi to each subpackage for EL7
+
 * Wed Aug 4 2021 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc3-4
 - Add patch for vol test fixes for DAOS
 - add libfabric-devel
