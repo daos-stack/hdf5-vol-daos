@@ -58,7 +58,7 @@ Patch1: https://github.com/HDFGroup/vol-daos/commit/5eed612db03458c1b21e18f13fa2
 Patch2: https://github.com/HDFGroup/vol-tests/commit/e29abaf69233e014e6e26cf927cc55934c178128.patch
 Patch3: https://github.com/HDFGroup/vol-tests/commit/8a4d3079ebf7ddb4222183f03be6e7bd33a86ee2.patch
 Patch4: https://github.com/HDFGroup/vol-daos/commit/88cefd445aa8cb7bc33f9bf30355501138866e27.patch
-Patch5: https://github.com/HDFGroup/vol-daos/commit/a250f01c40d2f845b01ea50531227f35a44a4af3.patch
+Patch5: a250f01c40d2f845b01ea50531227f35a44a4af3.patch
 Patch6: https://github.com/HDFGroup/vol-daos/commit/cb4d4e9cfbb274b70e27b023bc92fb199a3ac8e8.patch
 Patch7: https://github.com/HDFGroup/vol-daos/commit/d7b4a2a70ab86dff2d61a67c09cffe3f03176c41.patch
 Patch8: https://github.com/HDFGroup/vol-daos/commit/62a56ec1c48b12037bc823a9436c14c250dfdc55.patch
