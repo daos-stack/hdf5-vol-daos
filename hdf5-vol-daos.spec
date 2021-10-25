@@ -46,7 +46,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 6%{?commit:.git%{shortcommit}}%{?dist}
+Release: 7%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -143,7 +143,6 @@ HDF5 VOL DAOS tests with openmpi3
 %package mpich
 Summary: HDF5 VOL DAOS with MPICH
 BuildRequires: hdf5-mpich-devel%{?_isa} >= 1.12.1
-BuildRequires: libfabric-devel
 Provides: %{name}-mpich2 = %{version}-%{release}
 
 %description mpich
@@ -280,6 +279,9 @@ done
 %endif
 
 %changelog
+* Mon Oct 18 2021 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc3-7
+- remove BR libfabric-devel
+
 * Thu Oct 7 2021 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc3-6
 - Bring in patches to add support for labels and fix some bugs in the VOL
 
