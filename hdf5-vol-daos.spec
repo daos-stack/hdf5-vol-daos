@@ -46,7 +46,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 7%{?commit:.git%{shortcommit}}%{?dist}
+Release: 8%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -279,6 +279,9 @@ done
 %endif
 
 %changelog
+* Fri Nov 12 2021 Wang Shilong <shilong.wang@intel.com> 1.1.0~rc3-8
+- Rebuilt for breaking DAOS API change
+
 * Mon Oct 18 2021 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc3-7
 - remove BR libfabric-devel
 
