@@ -10,9 +10,7 @@ SHELL=/bin/bash
 -include Makefile.local
 
 # default to Leap 15 distro for chrootbuild
-ifeq ($(MAKECMDGOALS),chrootbuild)
 CHROOT_NAME ?= opensuse-leap-15.2-x86_64
-endif
 include packaging/Makefile_distro_vars.mk
 
 ifeq ($(DEB_NAME),)
@@ -58,9 +56,6 @@ GIT_DIFF_EXCLUDES := $(PATCH_EXCLUDE_FILES:%=':!%')
 endif
 
 COMMON_RPM_ARGS  := --define "_topdir $$PWD/_topdir" $(BUILD_DEFINES)
-ifneq ($(CHROOT_NAME),)
-COMMON_RPM_ARGS  += --define "chroot_name $(CHROOT_NAME)" $(BUILD_DEFINES)
-endif
 SPEC             := $(shell if [ -f $(NAME)-$(DISTRO_BASE).spec ]; then echo $(NAME)-$(DISTRO_BASE).spec; else echo $(NAME).spec; fi)
 VERSION           = $(eval VERSION := $(shell rpm $(COMMON_RPM_ARGS) --specfile --qf '%{version}\n' $(SPEC) | sed -n '1p'))$(VERSION)
 DEB_RVERS        := $(subst $(DOT),\$(DOT),$(VERSION))
