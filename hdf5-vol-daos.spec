@@ -46,7 +46,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 8%{?commit:.git%{shortcommit}}%{?dist}
+Release: 9%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -166,6 +166,12 @@ HDF5 VOL DAOS tests with mpich
 
 %endif
 
+%if (0%{?suse_version} > 0)
+%global __debug_package 1
+%global _debuginfo_subpackages 1
+%debug_package
+%endif
+
 %prep
 %setup -n vol-daos-%{vol_tag}
 %setup -T -D -b 1 -n vol-daos-%{vol_tag}
@@ -279,6 +285,9 @@ done
 %endif
 
 %changelog
+* Fri Dec 17 2021 Phillip Henderson <phillip.henderson@intel.com> - 1.1.0~rc3-9
+- Enable building debuginfo package on SUSE platforms
+
 * Fri Nov 12 2021 Wang Shilong <shilong.wang@intel.com> 1.1.0~rc3-8
 - Rebuilt for breaking DAOS API change
 
