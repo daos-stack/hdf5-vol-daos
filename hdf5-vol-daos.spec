@@ -44,6 +44,14 @@
 %global mpi_incldir  %{_includedir}
 %endif
 
+%if (0%{?suse_version} > 0)
+%global __debug_package 1
+%global _debuginfo_subpackages 1
+%debug_package
+%elif (0%{?rhel} >= 7) && (0%{?rhel} < 8)
+%global _debuginfo_subpackages 1
+%endif
+
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
 Release: 10%{?commit:.git%{shortcommit}}%{?dist}
@@ -164,14 +172,6 @@ Requires: %{name}-mpich%{?_isa} = %{version}-%{release}
 %description mpich-tests
 HDF5 VOL DAOS tests with mpich
 
-%endif
-
-%if (0%{?suse_version} > 0)
-%global __debug_package 1
-%global _debuginfo_subpackages 1
-%debug_package
-%elif (0%{?rhel} >= 7) && (0%{?rhel} < 8)
-%global _debuginfo_subpackages 1
 %endif
 
 %prep
