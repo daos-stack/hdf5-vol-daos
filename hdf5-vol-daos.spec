@@ -166,10 +166,12 @@ HDF5 VOL DAOS tests with mpich
 
 %endif
 
-%if (0%{?suse_version} > 0) || ((0%{?rhel} >= 7) && (0%{?rhel} < 8))
+%if (0%{?suse_version} > 0)
 %global __debug_package 1
 %global _debuginfo_subpackages 1
 %debug_package
+%elif (0%{?rhel} >= 7) && (0%{?rhel} < 8)
+%global _debuginfo_subpackages 1
 %endif
 
 %prep
