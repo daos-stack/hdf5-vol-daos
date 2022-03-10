@@ -53,6 +53,7 @@ License: GPL
 URL: https://portal.hdfgroup.org/display/HDF5/HDF5
 Source0: https://github.com/HDFGroup/vol-daos/archive/v%{vol_tag}.tar.gz
 Source1: https://github.com/HDFGroup/vol-tests/archive/v%{vol_test_tag}.tar.gz
+Patch0: https://github.com/HDFGroup/vol-daos/commit/03a5599f542c5599fc70d009233a4e1739f23a6f.patch
 
 BuildRequires: daos-devel%{?_isa}
 # Temporarily needed until daos-devel R: libuuid-devel
@@ -164,6 +165,7 @@ HDF5 VOL DAOS tests with mpich
 %prep
 %setup -n vol-daos-%{vol_tag}
 %setup -T -D -b 1 -n vol-daos-%{vol_tag}
+%patch0 -p1 -b .03a5599f542c5599fc70d009233a4e1739f23a6f.patch
 
 cd ../vol-tests-%{vol_test_tag}/
 cd ../vol-daos-%{vol_tag}
@@ -264,7 +266,7 @@ done
 
 %changelog
 * Fri Jan 7 2022 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc4-1
-- Update to rc4
+- Update to rc4 + change for oid types
 
 * Fri Dec 17 2021 Phillip Henderson <phillip.henderson@intel.com> - 1.1.0~rc3-9
 - Enable building debuginfo package on SUSE platforms
