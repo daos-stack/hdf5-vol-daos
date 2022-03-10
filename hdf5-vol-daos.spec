@@ -46,7 +46,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 9%{?commit:.git%{shortcommit}}%{?dist}
+Release: 10%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -64,6 +64,7 @@ Patch7: https://github.com/HDFGroup/vol-daos/commit/d7b4a2a70ab86dff2d61a67c09cf
 Patch8: https://github.com/HDFGroup/vol-daos/commit/62a56ec1c48b12037bc823a9436c14c250dfdc55.patch
 Patch9: https://github.com/HDFGroup/vol-daos/commit/007dd82ff24553d602d3381cbec041fe5bb3a28f.patch
 Patch10: https://github.com/HDFGroup/vol-daos/commit/0fb7b00f7891b9fdf75c0fef4bbcc28614c7f2ad.patch
+Patch11: https://github.com/HDFGroup/vol-daos/commit/03a5599f542c5599fc70d009233a4e1739f23a6f.patch
 
 BuildRequires: daos-devel%{?_isa}
 # Temporarily needed until daos-devel R: libuuid-devel
@@ -184,6 +185,7 @@ HDF5 VOL DAOS tests with mpich
 %patch8 -p1 -b .62a56ec1c48b12037bc823a9436c14c250dfdc55.patch
 %patch9 -p1 -b .007dd82ff24553d602d3381cbec041fe5bb3a28f.patch
 %patch10 -p1 -b .0fb7b00f7891b9fdf75c0fef4bbcc28614c7f2ad.patch
+%patch11 -p1 -b .03a5599f542c5599fc70d009233a4e1739f23a6f.patch
 
 cd ../vol-tests-%{vol_test_tag}/
 %patch2 -p1 -b .e29abaf69233e014e6e26cf927cc55934c178128.patch
@@ -285,6 +287,9 @@ done
 %endif
 
 %changelog
+* Thu Mar 10 2022 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc3-10
+- Bring in patch for oid type changes
+
 * Fri Dec 17 2021 Phillip Henderson <phillip.henderson@intel.com> - 1.1.0~rc3-9
 - Enable building debuginfo package on SUSE platforms
 
