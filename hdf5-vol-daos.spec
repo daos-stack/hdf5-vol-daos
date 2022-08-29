@@ -11,7 +11,7 @@
 %global vol_major 1
 %global vol_minor 1
 %global vol_bugrelease 0
-%global vol_prerelease rc4
+#%%global vol_prerelease rc4
 %global vol_tag  %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:%{vol_prerelease}}
 
 %if %{with_mpich}
@@ -46,7 +46,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 2%{?commit:.git%{shortcommit}}%{?dist}
+Release: 1%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -265,8 +265,8 @@ done
 %endif
 
 %changelog
-* Mon Aug 29 2022 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc4-2
-- remove patch that was already applied and add a new one that is required (3574df5)
+* Mon Aug 29 2022 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0-1
+- Update vol to release 1.1.0 + 3574df5
 
 * Fri Jan 7 2022 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc4-1
 - Update to rc4 + change for oid types
