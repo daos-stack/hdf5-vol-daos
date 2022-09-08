@@ -11,7 +11,7 @@
 %global vol_major 1
 %global vol_minor 1
 %global vol_bugrelease 0
-%global vol_prerelease rc4
+#%%global vol_prerelease rc4
 %global vol_tag  %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:%{vol_prerelease}}
 
 %if %{with_mpich}
@@ -38,10 +38,14 @@
 
 %if (0%{?suse_version} >= 1500)
 %global mpi_libdir %{_libdir}/mpi/gcc
-%global mpi_incldir  %{_includedir}/mpi/gcc
+%global mpi_lib_ext lib64
+%global mpi_includedir %{_libdir}/mpi/gcc
+%global mpi_include_ext /include
 %else
 %global mpi_libdir %{_libdir}
-%global mpi_incldir  %{_includedir}
+%global mpi_lib_ext lib
+%global mpi_includedir %{_includedir}
+%global mpi_include_ext -%{_arch}
 %endif
 
 Name:    hdf5-vol-daos
@@ -53,7 +57,7 @@ License: GPL
 URL: https://portal.hdfgroup.org/display/HDF5/HDF5
 Source0: https://github.com/HDFGroup/vol-daos/archive/v%{vol_tag}.tar.gz
 Source1: https://github.com/HDFGroup/vol-tests/archive/v%{vol_test_tag}.tar.gz
-Patch0: https://github.com/HDFGroup/vol-daos/commit/03a5599f542c5599fc70d009233a4e1739f23a6f.patch
+Patch0: https://github.com/HDFGroup/vol-daos/commit/3574df56fed78ee70172f17a528fae7d90051d58.patch
 
 BuildRequires: daos-devel%{?_isa}
 # Temporarily needed until daos-devel R: libuuid-devel
@@ -69,7 +73,6 @@ BuildRequires: cmake3 >= 3.1
 BuildRequires: Lmod
 %endif
 BuildRequires: hdf5-devel%{?_isa}
-BuildRequires: libuuid-devel
 
 %description
 HDF5 VOL DAOS connector is used to leverage the
@@ -80,7 +83,8 @@ storage related calls into native daos storage operations
 %if %{with_openmpi}
 %package openmpi
 Summary: HDF5 VOL DAOS with OpenMPI 3
-BuildRequires: hdf5-openmpi-devel%{?_isa} >= 1.12.1
+BuildRequires: hdf5-openmpi-devel%{?_isa} >= 1.13.1
+BuildRequires: hdf5-openmpi-static%{?_isa}
 Provides: %{name}-openmpi = %{version}-%{release}
 
 %description openmpi
@@ -89,6 +93,7 @@ HDF5 VOL DAOS with OpenMPI 3
 %package openmpi-devel
 Summary: HDF5 VOL DAOS devel with OpenMPI 3
 Requires: hdf5-openmpi-devel%{?_isa}
+BuildRequires: hdf5-openmpi-static%{?_isa}
 Requires: %{name}-openmpi%{?_isa} = %{version}-%{release}
 Provides: %{name}-openmpi-devel = %{version}-%{release}
 
@@ -106,7 +111,8 @@ HDF5 VOL DAOS tests with openmpi
 %if %{with_openmpi3}
 %package openmpi3
 Summary: HDF5 VOL DAOS with OpenMPI 3
-BuildRequires: hdf5-openmpi3-devel%{?_isa} >= 1.12.1
+BuildRequires: hdf5-openmpi3-devel%{?_isa} >= 1.13.1
+BuildRequires: hdf5-openmpi3-static%{?_isa}
 Provides: %{name}-openmpi3 = %{version}-%{release}
 
 %description openmpi3
@@ -114,7 +120,8 @@ HDF5 VOL DAOS with OpenMPI 3
 
 %package openmpi3-devel
 Summary: HDF5 VOL DAOS devel with OpenMPI 3
-Requires: hdf5-openmpi3-devel%{?_isa} >= 1.12.1
+Requires: hdf5-openmpi3-devel%{?_isa} >= 1.13.1
+BuildRequires: hdf5-openmpi3-static%{?_isa}
 Requires: %{name}-openmpi3%{?_isa} = %{version}-%{release}
 Provides: %{name}-openmpi3-devel = %{version}-%{release}
 
@@ -132,7 +139,8 @@ HDF5 VOL DAOS tests with openmpi3
 %if %{with_mpich}
 %package mpich
 Summary: HDF5 VOL DAOS with MPICH
-BuildRequires: hdf5-mpich-devel%{?_isa} >= 1.12.1
+BuildRequires: hdf5-mpich-devel%{?_isa} >= 1.13.1
+BuildRequires: hdf5-mpich-static%{?_isa}
 Provides: %{name}-mpich2 = %{version}-%{release}
 
 %description mpich
@@ -141,6 +149,7 @@ HDF5 VOL DAOS with MPICH
 %package mpich-devel
 Summary: HDF5 VOL DAOS devel with MPICH
 Requires: hdf5-mpich-devel%{?_isa}
+BuildRequires: hdf5-mpich-static%{?_isa}
 Requires: %{name}-mpich%{?_isa} = %{version}-%{release}
 Provides: %{name}-mpich2-devel = %{version}-%{release}
 
@@ -165,7 +174,7 @@ HDF5 VOL DAOS tests with mpich
 %prep
 %setup -n vol-daos-%{vol_tag}
 %setup -T -D -b 1 -n vol-daos-%{vol_tag}
-%patch0 -p1 -b .03a5599f542c5599fc70d009233a4e1739f23a6f.patch
+%patch0 -p1 -b .3574df56fed78ee70172f17a528fae7d90051d58.patch
 
 cd ../vol-tests-%{vol_test_tag}/
 cd ../vol-daos-%{vol_tag}
@@ -181,8 +190,8 @@ for mpi in %{?mpi_list}; do
         -DHDF5_VOL_TEST_ENABLE_PART=ON \
         -DHDF5_VOL_TEST_ENABLE_PARALLEL=ON \
         -DHDF5_VOL_TEST_ENABLE_ASYNC=ON \
-        -DHDF5_VOL_DAOS_USE_SYSTEM_HDF5=OFF \
         -DMPI_C_COMPILER=%{mpi_libdir}/$mpi/bin/mpicc \
+        -DHDF5_C_COMPILER_EXECUTABLE=/%{mpi_libdir}/$mpi/bin/h5pcc \
         -DCMAKE_SKIP_RPATH:BOOL=ON \
         ..
   %{make_build}
@@ -265,6 +274,10 @@ done
 %endif
 
 %changelog
+* Tue Sep 6 2022 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0-1
+- Update vol to release 1.1.0 + 3574df5
+- Fix path to include dir
+
 * Fri Jan 7 2022 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0~rc4-1
 - Update to rc4 + change for oid types
 
