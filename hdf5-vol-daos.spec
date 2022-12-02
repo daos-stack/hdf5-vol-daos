@@ -50,7 +50,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 1%{?commit:.git%{shortcommit}}%{?dist}
+Release: 2%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -58,6 +58,7 @@ URL: https://portal.hdfgroup.org/display/HDF5/HDF5
 Source0: https://github.com/HDFGroup/vol-daos/archive/v%{vol_tag}.tar.gz
 Source1: https://github.com/HDFGroup/vol-tests/archive/v%{vol_test_tag}.tar.gz
 Patch0: https://github.com/HDFGroup/vol-daos/commit/3574df56fed78ee70172f17a528fae7d90051d58.patch
+Patch1: https://github.com/HDFGroup/vol-daos/commit/b64776874c07732720b716b81b8dc9c14115da12.patch
 
 BuildRequires: daos-devel%{?_isa}
 # Temporarily needed until daos-devel R: libuuid-devel
@@ -175,6 +176,7 @@ HDF5 VOL DAOS tests with mpich
 %setup -n vol-daos-%{vol_tag}
 %setup -T -D -b 1 -n vol-daos-%{vol_tag}
 %patch0 -p1 -b .3574df56fed78ee70172f17a528fae7d90051d58.patch
+%patch1 -p1 -b .b64776874c07732720b716b81b8dc9c14115da12.patch
 
 cd ../vol-tests-%{vol_test_tag}/
 cd ../vol-daos-%{vol_tag}
@@ -274,6 +276,9 @@ done
 %endif
 
 %changelog
+* Thu Dec 1 2022 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0-2
+- Update vol to bring in fix for object flags
+
 * Tue Sep 6 2022 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0-1
 - Update vol to release 1.1.0 + 3574df5
 - Fix path to include dir
