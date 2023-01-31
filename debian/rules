@@ -10,7 +10,11 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 	dh $@
 
 override_dh_auto_configure:
-	tar xzf ../../../v0.9.3.tar.gz
+	if ! tar xzf ../../../v0.9.3.tar.gz; then \
+	    pwd || true;                          \
+		ls -l . .. ../../.. || true           \
+		exit 1;                               \
+	fi
 	rm -rf test/vol
 	mv vol-tests-0.9.3 test/vol
 	dh_auto_configure -- -DBUILD_TESTING=ON                                   \
