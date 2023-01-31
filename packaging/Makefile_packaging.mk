@@ -181,28 +181,38 @@ $(DEB_TOP)/.patched: $(PATCHES) check-env deb_detar | \
 	$(DEB_BUILD)/debian/
 	mkdir -p ${DEB_BUILD}/debian/patches
 	mkdir -p $(DEB_TOP)/patches
-	for f in $(PATCHES); do \
-          rm -f $(DEB_TOP)/patches/*; \
-	  if git mailsplit -o$(DEB_TOP)/patches < "$$f" ;then \
-	      fn=$$(basename "$$f"); \
-	      for f1 in $(DEB_TOP)/patches/*;do \
-	        [ -e "$$f1" ] || continue; \
-	        f1n=$$(basename "$$f1"); \
-	        echo "$${fn}_$${f1n}" >> $(DEB_BUILD)/debian/patches/series ; \
-	        mv "$$f1" $(DEB_BUILD)/debian/patches/$${fn}_$${f1n}; \
-	      done; \
-	  else \
-	    fb=$$(basename "$$f"); \
-	    cp "$$f" $(DEB_BUILD)/debian/patches/ ; \
-	    echo "$$fb" >> $(DEB_BUILD)/debian/patches/series ; \
-	    if ! grep -q "^Description:\|^Subject:" "$$f" ;then \
-	      sed -i '1 iSubject: Auto added patch' \
-	        "$(DEB_BUILD)/debian/patches/$$fb" ;fi ; \
-	    if ! grep -q "^Origin:\|^Author:\|^From:" "$$f" ;then \
-	      sed -i '1 iOrigin: other' \
-	        "$(DEB_BUILD)/debian/patches/$$fb" ;fi ; \
-	  fi ; \
+	if [ -f $(DEB_BUILD)/debian/patches/series ]; then                   \
+	    mv $(DEB_BUILD)/debian/patches/series                            \
+	       $(DEB_BUILD)/debian/patches/series.orig;                      \
+	fi
+	for f in $(PATCHES); do                                              \
+          rm -f $(DEB_TOP)/patches/*;                                    \
+	  if git mailsplit -o$(DEB_TOP)/patches < "$$f"; then                \
+	      fn=$$(basename "$$f");                                         \
+	      for f1 in $(DEB_TOP)/patches/*;do                              \
+	        [ -e "$$f1" ] || continue;                                   \
+	        f1n=$$(basename "$$f1");                                     \
+	        echo "$${fn}_$${f1n}" >> $(DEB_BUILD)/debian/patches/series; \
+	        mv "$$f1" $(DEB_BUILD)/debian/patches/$${fn}_$${f1n};        \
+	      done;                                                          \
+	  else                                                               \
+	    fb=$$(basename "$$f");                                           \
+	    cp "$$f" $(DEB_BUILD)/debian/patches/;                           \
+	    echo "$$fb" >> $(DEB_BUILD)/debian/patches/series;               \
+	    if ! grep -q "^Description:\|^Subject:" "$$f"; then              \
+	      sed -i '1 iSubject: Auto added patch'                          \
+	        "$(DEB_BUILD)/debian/patches/$$fb";                          \
+		fi;                                                              \
+	    if ! grep -q "^Origin:\|^Author:\|^From:" "$$f"; then            \
+	      sed -i '1 iOrigin: other'                                      \
+	        "$(DEB_BUILD)/debian/patches/$$fb";                          \
+		fi;                                                              \
+	  fi;                                                                \
 	done
+	if [ -f $(DEB_BUILD)/debian/patches/series.orig ]; then              \
+	    cat $(DEB_BUILD)/debian/patches/series.orig >>                   \
+	         $(DEB_BUILD)/debian/patches/series;                         \
+	fi
 	touch $@
 
 
@@ -210,22 +220,11 @@ $(DEB_TOP)/.patched: $(PATCHES) check-env deb_detar | \
 ifeq ($(ID_LIKE),debian)
 $(DEB_TOP)/.deb_files: $(shell find $(TOPDIR)/debian -type f) deb_detar | \
 	  $(DEB_BUILD)/debian/
-	cd $(TOPDIR)/ && \
-	    find debian -maxdepth 1 -type f -exec cp '{}' '$(BUILD_PREFIX)/$(DEB_BUILD)/{}' ';'
-	if [ -e $(TOPDIR)/debian/source ]; then \
-	  cp -r $(TOPDIR)/debian/source $(DEB_BUILD)/debian; fi
-	if [ -e $(TOPDIR)/debian/local ]; then \
-	  cp -r $(TOPDIR)/debian/local $(DEB_BUILD)/debian; fi
-	if [ -e $(TOPDIR)/debian/examples ]; then \
-	  cp -r $(TOPDIR)/debian/examples $(DEB_BUILD)/debian; fi
-	if [ -e $(TOPDIR)/debian/upstream ]; then \
-	  cp -r $(TOPDIR)/debian/upstream $(DEB_BUILD)/debian; fi
-	if [ -e $(TOPDIR)/debian/tests ]; then \
-	  cp -r $(TOPDIR)/debian/tests $(DEB_BUILD)/debian; fi
+	cp -r $(TOPDIR)/debian $(DEB_BUILD)/
 	rm -f $(DEB_BUILD)/debian/*.ex $(DEB_BUILD)/debian/*.EX
 	rm -f $(DEB_BUILD)/debian/*.orig
 ifneq ($(GIT_INFO),)
-	cd $(DEB_BUILD); dch --distribution unstable \
+	cd $(DEB_BUILD); dch --distribution unstable  \
 	  --newversion $(DEB_PREV_RELEASE)$(GIT_INFO) \
 	  "Git commit information"
 endif
@@ -317,20 +316,6 @@ patch:
 	echo "PKG_GIT_COMMIT is not defined"
 endif
 
-# *_LOCAL_* repos are locally built packages.
-ifeq ($(LOCAL_REPOS),true)
-  ifneq ($(ARTIFACTORY_URL),)
-    ifneq ($(DAOS_STACK_$(DISTRO_BASE)_LOCAL_REPO),)
-      DISTRO_REPOS = disabled # any non-empty value here works and is not used beyond testing if the value is empty or not
-	  # convert to artifactory url
-      DAOS_STACK_$(DISTRO_BASE)_LOCAL_REPO := $(subst reposi,artifac,$(DAOS_STACK_$(DISTRO_BASE)_LOCAL_REPO))
-      # $(DISTRO_BASE)_LOCAL_REPOS is a list separated by | because you cannot pass lists
-      # of values with spaces as environment variables
-      $(DISTRO_BASE)_LOCAL_REPOS := [trusted=yes] $(ARTIFACTORY_URL)$(subst stack,stack-daos,$(DAOS_STACK_$(DISTRO_BASE)_LOCAL_REPO))
-      $(DISTRO_BASE)_LOCAL_REPOS += |[trusted=yes] $(ARTIFACTORY_URL)$(subst stack,stack-deps,$(DAOS_STACK_$(DISTRO_BASE)_LOCAL_REPO))
-    endif #ifneq ($(DAOS_STACK_$(DISTRO_BASE)_LOCAL_REPO),)
-  endif # ifneq ($(ARTIFACTORY_URL),)
-endif # ifeq ($(LOCAL_REPOS),true)
 ifeq ($(ID_LIKE),debian)
 chrootbuild: $(DEB_TOP)/$(DEB_DSC)
 	$(call distro_map)                                      \
@@ -346,6 +331,8 @@ chrootbuild: $(DEB_TOP)/$(DEB_DSC)
 	DEB_TOP="$(DEB_TOP)"                                    \
 	DEB_DSC="$(DEB_DSC)"                                    \
 	DISTRO_ID_OPT="$(DISTRO_ID_OPT)"                        \
+	LOCAL_REPOS='$(LOCAL_REPOS)'                            \
+	ARTIFACTORY_URL="$(ARTIFACTORY_URL)"                    \
 	packaging/debian_chrootbuild
 else
 chrootbuild: $(SRPM) $(CALLING_MAKEFILE)
@@ -360,7 +347,7 @@ chrootbuild: $(SRPM) $(CALLING_MAKEFILE)
 	REPO_FILE_URL="$(REPO_FILE_URL)"                        \
 	MOCK_OPTIONS="$(MOCK_OPTIONS)"                          \
 	RPM_BUILD_OPTIONS='$(RPM_BUILD_OPTIONS)'                \
-	DISTRO_REPOS='$(DISTRO_REPOS)'                          \
+	LOCAL_REPOS='$(LOCAL_REPOS)'                            \
 	ARTIFACTORY_URL="$(ARTIFACTORY_URL)"                    \
 	DISTRO_VERSION="$(DISTRO_VERSION)"                      \
 	TARGET="$<"                                             \
