@@ -27,11 +27,11 @@ Description: HDF5 VOL DAOS connector is used to leverage the
 Package: libhdf5-vol-daos-mpich-dev
 Section: libdevel
 Architecture: linux-any
-Depends: libhdf5-vol-daos0-mpich (= ${binary:Version}), ${misc:Depends}
+Depends: libhdf5-vol-daos-mpich-1 (= ${binary:Version}), ${misc:Depends}
 Description: HDF5 VOL DAOS connector is used to leverage the
  capabilities of the DAOS object storage system
  within an HDF5 application.  It translates HDF5 VOL
  storage related calls into native daos storage operations
  .
- This package is needed to compile programs against libhdf5-vol-daos0-mpich.
+ This package is needed to compile programs against libhdf5-vol-daos-mpich-1.
  It contains the header files and links needed for compiling.
