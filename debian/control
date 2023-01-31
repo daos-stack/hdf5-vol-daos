@@ -8,7 +8,8 @@ Build-Depends: debhelper-compat (= 12),
                uuid-dev,
                libboost-dev,
                cmake,
-               libhdf5-mpich-dev
+               libhdf5-mpich-dev,
+               curl
 Standards-Version: 4.4.1.0
 Vcs-Browser: https://github.com/LLNL/dtcmp
 Vcs-Git: https://github.com/LLNL/dtcmp.git

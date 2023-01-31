@@ -10,11 +10,7 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 	dh $@
 
 override_dh_auto_configure:
-	if ! tar xzf ../../../v0.9.3.tar.gz; then \
-	    pwd || true;                          \
-		ls -l . .. ../../.. || true           \
-		exit 1;                               \
-	fi
+	curl https://github.com/HDFGroup/vol-tests/archive/v0.9.3.tar.gz | tar xzf -
 	rm -rf test/vol
 	mv vol-tests-0.9.3 test/vol
 	dh_auto_configure -- -DBUILD_TESTING=ON                                   \
