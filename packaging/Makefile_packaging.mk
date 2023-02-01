@@ -65,6 +65,11 @@ DEB_TOP          := _topdir/BUILD
 DEB_BUILD        := $(DEB_TOP)/$(NAME)-$(VERSION)
 DEB_TARBASE      := $(DEB_TOP)/$(DEB_NAME)_$(VERSION)
 REAL_SOURCE      ?= $(eval REAL_SOURCE := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -S -l $(SPEC) | sed -e 2,\$$d -e 's/\#/\\\#/g' -e 's/.*:  *//'))$(REAL_SOURCE)
+ifeq ($(ID_LIKE),debian)
+ifneq ($(DEB_SOURCE),)
+SOURCE           ?= $(DEB_SOURCE)
+endif
+endif
 SOURCE           ?= $(REAL_SOURCE)
 PATCHES          ?= $(eval PATCHES := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -l $(SPEC) | sed -ne 1d -e '/already present/d' -e 's/.*:  *//' -e 's/.*\///' -e '/\.patch/p'))$(PATCHES)
 OTHER_SOURCES    := $(eval OTHER_SOURCES := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -l $(SPEC) | sed -ne 1d -e '/already present/d' -e 's/.*:  *//' -e 's/.*\///' -e '/\.patch/d' -e p))$(OTHER_SOURCES)
@@ -171,6 +176,7 @@ $(DEB_TARBASE).orig.tar.$(SRC_EXT): $(DEB_BUILD).tar.$(SRC_EXT)
 	ln -f $< $@
 
 deb_detar: $(notdir $(SOURCE)) $(DEB_TARBASE).orig.tar.$(SRC_EXT)
+	echo "ID_LIKE: $(ID_LIKE)"
 	# Unpack tarball
 	rm -rf ./$(DEB_TOP)/.patched ./$(DEB_TOP)/.detar
 	rm -rf ./$(DEB_BUILD)/* ./$(DEB_BUILD)/.pc ./$(DEB_BUILD)/.libs
