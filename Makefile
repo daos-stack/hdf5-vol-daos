@@ -14,7 +14,6 @@ source_deps.mk:$(notdir $(SOURCES))
 
 ifeq ($(ID_LIKE),debian)
 $(SOURCE): $(notdir $(REAL_SOURCE)) $(OTHER_SOURCES)
-	echo "ID_LIKE: $(ID_LIKE)"
 	rm -rf $(subst .tar.gz,,$@)
 	mkdir $(subst .tar.gz,,$@)
 	tar -C $(subst .tar.gz,,$@) --strip 1 -xf $(notdir $(REAL_SOURCE))

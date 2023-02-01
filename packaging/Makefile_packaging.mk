@@ -176,7 +176,6 @@ $(DEB_TARBASE).orig.tar.$(SRC_EXT): $(DEB_BUILD).tar.$(SRC_EXT)
 	ln -f $< $@
 
 deb_detar: $(notdir $(SOURCE)) $(DEB_TARBASE).orig.tar.$(SRC_EXT)
-	echo "ID_LIKE: $(ID_LIKE)"
 	# Unpack tarball
 	rm -rf ./$(DEB_TOP)/.patched ./$(DEB_TOP)/.detar
 	rm -rf ./$(DEB_BUILD)/* ./$(DEB_BUILD)/.pc ./$(DEB_BUILD)/.libs
