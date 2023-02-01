@@ -12,6 +12,7 @@ source_deps.mk:$(notdir $(SOURCES))
 		echo $$s:;                 \
 	done > $@
 
+ifeq ($(ID_LIKE),debian)
 $(SOURCE): $(notdir $(REAL_SOURCE)) $(OTHER_SOURCES)
 	echo "ID_LIKE: $(ID_LIKE)"
 	rm -rf $(subst .tar.gz,,$@)
@@ -20,3 +21,4 @@ $(SOURCE): $(notdir $(REAL_SOURCE)) $(OTHER_SOURCES)
 	tar -C $(subst .tar.gz,,$@)/test/vol --strip 1 -xf $(OTHER_SOURCES)
 	tar -czf $@ $(subst .tar.gz,,$@)
 	rm -rf $(subst .tar.gz,,$@)
+endif
