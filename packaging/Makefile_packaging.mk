@@ -160,7 +160,7 @@ ifeq ($(DL_NAME),)
 DL_NAME = $(NAME)
 endif
 
-$(notdir $(SOURCE)): $(SPEC) $(CALLING_MAKEFILE)
+$(notdir $(SOURCE)) $(notdir $(REAL_SOURCE)): $(SPEC) $(CALLING_MAKEFILE)
 	# TODO: need to clean up old ones
 	$(SPECTOOL) -g $(SPEC)
 
