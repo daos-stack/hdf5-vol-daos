@@ -64,9 +64,10 @@ RPMS              = $(eval RPMS := $(addsuffix .rpm,$(addprefix _topdir/RPMS/x86
 DEB_TOP          := _topdir/BUILD
 DEB_BUILD        := $(DEB_TOP)/$(NAME)-$(VERSION)
 DEB_TARBASE      := $(DEB_TOP)/$(DEB_NAME)_$(VERSION)
-SOURCE           ?= $(eval SOURCE := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -S -l $(SPEC) | sed -e 2,\$$d -e 's/\#/\\\#/g' -e 's/.*:  *//'))$(SOURCE)
-PATCHES          ?= $(eval PATCHES := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -l $(SPEC) | sed -ne 1d -e 's/.*:  *//' -e 's/.*\///' -e '/\.patch/p'))$(PATCHES)
-OTHER_SOURCES    := $(eval OTHER_SOURCES := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -l $(SPEC) | sed -ne 1d -e 's/.*:  *//' -e 's/.*\///' -e '/\.patch/d' -e p))$(OTHER_SOURCES)
+REAL_SOURCE      ?= $(eval REAL_SOURCE := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -S -l $(SPEC) | sed -e 2,\$$d -e 's/\#/\\\#/g' -e 's/.*:  *//'))$(REAL_SOURCE)
+SOURCE           ?= $(REAL_SOURCE)
+PATCHES          ?= $(eval PATCHES := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -l $(SPEC) | sed -ne 1d -e '/already present/d' -e 's/.*:  *//' -e 's/.*\///' -e '/\.patch/p'))$(PATCHES)
+OTHER_SOURCES    := $(eval OTHER_SOURCES := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -l $(SPEC) | sed -ne 1d -e '/already present/d' -e 's/.*:  *//' -e 's/.*\///' -e '/\.patch/d' -e p))$(OTHER_SOURCES)
 SOURCES          := $(addprefix _topdir/SOURCES/,$(notdir $(SOURCE)) $(PATCHES) $(OTHER_SOURCES))
 ifeq ($(ID_LIKE),debian)
 DEBS             := $(addsuffix _$(VERSION)-1_amd64.deb,$(shell sed -n '/-udeb/b; s,^Package:[[:blank:]],$(DEB_TOP)/,p' $(TOPDIR)/debian/control))

@@ -10,3 +10,15 @@ source_deps.mk:$(notdir $(SOURCES))
 	for s in $(notdir $(SOURCES)); do \
 		echo $$s:;                 \
 	done > $@
+
+ifeq ($(ID_LIKE),debian)
+SOURCE        = hdf5-vol-daos+vol-tests.tar.gz
+
+$(SOURCE): $(notdir $(REAL_SOURCE)) $(OTHER_SOURCES)
+	rm -rf $(subst .tar.gz,,$@)
+	mkdir $(subst .tar.gz,,$@)
+	tar -C $(subst .tar.gz,,$@) --strip 1 -xf $(notdir $(REAL_SOURCE))
+	tar -C $(subst .tar.gz,,$@)/test/vol --strip 1 -xf $(OTHER_SOURCES)
+	tar -czf $@ $(subst .tar.gz,,$@)
+	rm -rf $(subst .tar.gz,,$@)
+endif
