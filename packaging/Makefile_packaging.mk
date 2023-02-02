@@ -64,7 +64,7 @@ RPMS              = $(eval RPMS := $(addsuffix .rpm,$(addprefix _topdir/RPMS/x86
 DEB_TOP          := _topdir/BUILD
 DEB_BUILD        := $(DEB_TOP)/$(NAME)-$(VERSION)
 DEB_TARBASE      := $(DEB_TOP)/$(DEB_NAME)_$(VERSION)
-REAL_SOURCE      ?= $(eval REAL_SOURCE := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -S -l $(SPEC) | sed -e 2,\$$d -e 's/\#/\\\#/g' -e 's/.*:  *//'))$(REAL_SOURCE)
+REAL_SOURCE      ?= $(eval REAL_SOURCE := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -S -l $(SPEC) | sed -e 2,\$$d -e 's/\#/\\\#/g' -e 's/Source.*:  *//'))$(REAL_SOURCE)
 ifeq ($(ID_LIKE),debian)
 ifneq ($(DEB_SOURCE),)
 SOURCE           ?= $(DEB_SOURCE)
@@ -72,8 +72,8 @@ endif
 endif
 SOURCE           ?= $(REAL_SOURCE)
 PATCHES          ?= $(eval PATCHES := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -l $(SPEC) | sed -ne 1d -e '/already present/d' -e 's/.*:  *//' -e 's/.*\///' -e '/\.patch/p'))$(PATCHES)
-OTHER_SOURCES    := $(eval OTHER_SOURCES := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -l $(SPEC) | sed -ne 1d -e '/already present/d' -e 's/.*:  *//' -e 's/.*\///' -e '/\.patch/d' -e p))$(OTHER_SOURCES)
-SOURCES          := $(addprefix _topdir/SOURCES/,$(notdir $(SOURCE)) $(PATCHES) $(OTHER_SOURCES))
+OTHER_SOURCES    := $(eval OTHER_SOURCES := $(shell CHROOT_NAME=$(CHROOT_NAME) $(SPECTOOL) $(COMMON_RPM_ARGS) -l $(SPEC) | sed -ne 1d -e '/already present/d' -e 's/Source.*:  *//p'))$(OTHER_SOURCES)
+SOURCES          := $(addprefix _topdir/SOURCES/,$(notdir $(SOURCE) $(OTHER_SOURCES)) $(PATCHES))
 ifeq ($(ID_LIKE),debian)
 DEBS             := $(addsuffix _$(VERSION)-1_amd64.deb,$(shell sed -n '/-udeb/b; s,^Package:[[:blank:]],$(DEB_TOP)/,p' $(TOPDIR)/debian/control))
 DEB_PREV_RELEASE := $(shell cd $(TOPDIR) && dpkg-parsechangelog -S version)
@@ -160,7 +160,7 @@ ifeq ($(DL_NAME),)
 DL_NAME = $(NAME)
 endif
 
-$(notdir $(SOURCE)): $(SPEC) $(CALLING_MAKEFILE)
+$(notdir $(SOURCE) $(OTHER_SOURCES)): $(SPEC) $(CALLING_MAKEFILE)
 	# TODO: need to clean up old ones
 	$(SPECTOOL) -g $(SPEC)
 
