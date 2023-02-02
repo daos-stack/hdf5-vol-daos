@@ -160,7 +160,7 @@ ifeq ($(DL_NAME),)
 DL_NAME = $(NAME)
 endif
 
-$(notdir $(SOURCE) $(OTHER_SOURCES)): $(SPEC) $(CALLING_MAKEFILE)
+$(notdir $(SOURCE) $(OTHER_SOURCES) $(REAL_SOURCE)): $(SPEC) $(CALLING_MAKEFILE)
 	# TODO: need to clean up old ones
 	$(SPECTOOL) -g $(SPEC)
 
@@ -468,6 +468,9 @@ show_rpms:
 
 show_source:
 	@echo '$(SOURCE)'
+
+show_real_source:
+	@echo '$(REAL_SOURCE)'
 
 show_patches:
 	@echo '$(PATCHES)'
