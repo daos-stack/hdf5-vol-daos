@@ -160,7 +160,7 @@ ifeq ($(DL_NAME),)
 DL_NAME = $(NAME)
 endif
 
-$(notdir $(SOURCE)) $(notdir $(REAL_SOURCE)): $(SPEC) $(CALLING_MAKEFILE)
+$(notdir $(SOURCE)): $(SPEC) $(CALLING_MAKEFILE)
 	# TODO: need to clean up old ones
 	$(SPECTOOL) -g $(SPEC)
 
@@ -176,6 +176,7 @@ $(DEB_TARBASE).orig.tar.$(SRC_EXT): $(DEB_BUILD).tar.$(SRC_EXT)
 	ln -f $< $@
 
 deb_detar: $(notdir $(SOURCE)) $(DEB_TARBASE).orig.tar.$(SRC_EXT)
+	echo "ID_LIKE: $(ID_LIKE)"
 	# Unpack tarball
 	rm -rf ./$(DEB_TOP)/.patched ./$(DEB_TOP)/.detar
 	rm -rf ./$(DEB_BUILD)/* ./$(DEB_BUILD)/.pc ./$(DEB_BUILD)/.libs
