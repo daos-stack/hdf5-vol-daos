@@ -28,7 +28,6 @@ done
 
 repo_args+="|$(curl -sSf "$REPO_FILE_URL"daos_ci-"$DISTRO"-artifactory.list |
             sed -e 's/#.*//' -e '/ubuntu-proxy/d' -e '/^$/d' -e '/^$/d'     \
-                -e '/daos-stack-daos/d'                                     \
                 -e 's/signed-by=.*\.gpg/trusted=yes/'                       |
             sed -e ':a; N; $!ba; s/\n/|/g')"
 for repo in $JOB_REPOS; do
