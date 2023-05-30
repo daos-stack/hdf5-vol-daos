@@ -1,0 +1,26 @@
+#! /usr/bin/make -f
+
+export DH_VERBOSE=1
+
+prefix := /usr
+buildroot := debian/tmp
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DBUILD_TESTING=ON                                   \
+        -DHDF5_VOL_TEST_ENABLE_PART=ON                                        \
+        -DHDF5_VOL_TEST_ENABLE_PARALLEL=ON                                    \
+        -DHDF5_VOL_TEST_ENABLE_ASYNC=ON                                       \
+        -DMPI_C_COMPILER=/usr/bin/mpicc.mpich                                 \
+        -DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/h5pcc.mpich                     \
+		-DHDF5_C_LIBRARY_hdf5=/usr/lib/x86_64-linux-gnu/hdf5/mpich/libhdf5.so \
+        -DCMAKE_SKIP_RPATH:BOOL=ON                                            \
+		-DHDF5_VOL_DAOS_INSTALL_LIB_DIR=$(prefix)/lib/x86_64-linux-gnu/
+
+# don't run the tests due to:
+# 1/20 Test  #1: h5vl_test_attribute ......................***Failed    0.01 sec
+#.../hdf5-vol-daos/_topdir/BUILD/hdf5-vol-daos-1.1.0/obj-x86_64-linux-gnu/bin/h5vl_test_driver: error while loading shared libraries: libh5vl_test_sys.so: cannot open shared object file: No such file or directory
+override_dh_auto_test:

@@ -175,8 +175,8 @@ HDF5 VOL DAOS tests with mpich
 %prep
 %setup -n vol-daos-%{vol_tag}
 %setup -T -D -b 1 -n vol-daos-%{vol_tag}
-%patch0 -p1 -b .3574df56fed78ee70172f17a528fae7d90051d58.patch
-%patch1 -p1 -b .b64776874c07732720b716b81b8dc9c14115da12.patch
+%patch -P 0 -p1 -b .3574df56fed78ee70172f17a528fae7d90051d58.patch
+%patch -P 1 -p1 -b .b64776874c07732720b716b81b8dc9c14115da12.patch
 
 cd ../vol-tests-%{vol_test_tag}/
 cd ../vol-daos-%{vol_tag}
