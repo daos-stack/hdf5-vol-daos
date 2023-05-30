@@ -6,11 +6,20 @@ DEB_SOURCE    := hdf5-vol-daos+vol-tests.tar.gz
 include packaging/Makefile_packaging.mk
 
 ifeq ($(ID_LIKE),debian)
-$(SOURCE): $(notdir $(REAL_SOURCE)) $(notdir $(OTHER_SOURCES))
+$(SOURCE): $(notdir $(SOURCE)) $(notdir $(OTHER_SOURCES))
 	rm -rf $(subst .tar.gz,,$@)
 	mkdir $(subst .tar.gz,,$@)
-	tar -C $(subst .tar.gz,,$@) --strip 1 -xf $(notdir $(REAL_SOURCE))
+	tar -C $(subst .tar.gz,,$@) --strip 1 -xf $(notdir $(SOURCE))
 	tar -C $(subst .tar.gz,,$@)/test/vol --strip 1 -xf $(notdir $(OTHER_SOURCES))
 	tar -czf $@ $(subst .tar.gz,,$@)
 	rm -rf $(subst .tar.gz,,$@)
 endif
+
+# Ugly hack because the
+#_topdir/SOURCES/%: % | _topdir/SOURCES/
+#	rm -f $@
+#	ln $< $@
+# rule in Makefile_packaging.mk does not seem to be working for this file
+_topdir/SOURCES/v0.9.3.tar.gz: v0.9.3.tar.gz | _topdir/SOURCES/
+	rm -f $@
+	ln $< $@
