@@ -50,7 +50,7 @@
 
 Name:    hdf5-vol-daos
 Version: %{vol_major}.%{vol_minor}.%{vol_bugrelease}%{?vol_prerelease:~%{vol_prerelease}}
-Release: 2%{?commit:.git%{shortcommit}}%{?dist}
+Release: 3%{?commit:.git%{shortcommit}}%{?dist}
 Summary: A Multi-purpose, Application-Centric, Scalable I/O Proxy Application
 
 License: GPL
@@ -173,10 +173,10 @@ HDF5 VOL DAOS tests with mpich
 %endif
 
 %prep
-%setup -n vol-daos-%{vol_tag}
-%setup -T -D -b 1 -n vol-daos-%{vol_tag}
-%patch0 -p1 -b .3574df56fed78ee70172f17a528fae7d90051d58.patch
-%patch1 -p1 -b .b64776874c07732720b716b81b8dc9c14115da12.patch
+%setup -q -n vol-daos-%{vol_tag}
+%setup -q -T -D -b 1 -n vol-daos-%{vol_tag}
+%patch -P 0 -p1 -b .3574df56fed78ee70172f17a528fae7d90051d58.patch
+%patch -P 1 -p1 -b .b64776874c07732720b716b81b8dc9c14115da12.patch
 
 cd ../vol-tests-%{vol_test_tag}/
 cd ../vol-daos-%{vol_tag}
@@ -276,6 +276,9 @@ done
 %endif
 
 %changelog
+* Tue Jul 04 2023 Brian J. Murrell <brian.murrell@intel.com> - 1.1.0-3
+- Add patches as local files
+
 * Thu Dec 1 2022 Mohamad Chaarawi <mohamad.chaarawi@intel.com> 1.1.0-2
 - Update vol to bring in fix for object flags
 

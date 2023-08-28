@@ -1,5 +1,5 @@
 #!/usr/bin/groovy
-/* Copyright (C) 2019 Intel Corporation
+/* Copyright (C) 2019-2023 Intel Corporation
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,4 +40,6 @@
 // I.e. for testing library changes
 //@Library(value="pipeline-lib@your_branch") _
 
-packageBuildingPipelineDAOSTest(['distros' : ['el8', 'leap15'], 'test-tag': 'vol'])
+/* groovylint-disable-next-line CompileStatic */
+packageBuildingPipelineDAOSTest(['distros' : ['el8', 'el9', 'leap15'],
+                                 'test-tag': 'vol'])
